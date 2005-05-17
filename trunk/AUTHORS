@@ -1,0 +1,11 @@
+Krzysztof Godlewski <krzygod@gmail.com>
+
+eggtrayicon.c & eggtrayicon.h:
+Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
+
+Powstanie tego projektu nie by³o by mo¿liwe bez pracy wielu ludzi, miêdzy
+innymi autorów:
+- klienta tleenx i biblioteki libtlen2
+- bibliotek gtk/glib
+- bibliotek gtkhtml/gnome
+

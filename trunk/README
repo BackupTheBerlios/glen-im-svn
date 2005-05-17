@@ -1,0 +1,33 @@
+
+Biblioteki i nag³ówki potrzebne do kompilacji:
+
+- libtlen2 (dostêpny przez CVS na sf.net)
+- libgtkhtml-3.2
+- libxml2
+- biblioteki i nag³ówki Gnome
+- glib >= 2.6, gtk+ >= 2.6
+- odrobina szczê¶cia :)
+
+
+Po kompilacji i make install nale¿y:
+
+- przegraæ katalog 'standardowy' z emotkami tlena windowsowego do:
+  /usr/local/share/pixmaps/glen/emotes/standardowy/
+  Je¶li uruchomisz glena a katalog z emotkami nie bêdzie istnia³ (dok³adniej:
+  emo-utf.xml), automatycznie wy³±czy siê opcja u¿ywania emotek -- po przegraniu
+  wszystkiego jak opisano powy¿ej musisz edytowaæ ~/.glen/prefs i ustawiæ opcjê
+  pref_chat_use_emotes na true (grupa [chat])
+  
+- w katalogu powy¿ej wykonaæ: 
+  iconv -f windows-1250 -t utf-8 emo.xml > emo-utf.xml 
+
+- uruchomiæ glena raz, powinien wyj¶æ z b³êdem autoryzacji
+
+- edytowaæ plik ~/.glen/prefs, odszukaæ linie z loginem i has³em, wpisaæ w³asne
+  Mo¿na spróbowaæ zmieniaæ te¿ inne opcje, jednak na razie nie przyniesie to
+  ¿adnego efektu. Mo¿na co najwy¿ej zmieniæ przegl±darkê.
+
+- u¿ywaæ i nie przeklinaæ mnie -- to jeszcze BARDZO wczesna wersja o
+ograniczonej funkcjonalno¶ci
+
+
