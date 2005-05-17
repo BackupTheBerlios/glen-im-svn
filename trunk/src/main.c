@@ -64,8 +64,6 @@ int main(int argc, char *argv[])
 	if(desc != NULL)
 		g_free(desc);
 
-	//o2_login();
-
 	gtk_main ();
 	return 0;
 }
