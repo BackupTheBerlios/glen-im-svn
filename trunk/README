@@ -16,7 +16,16 @@ Po kompilacji i make install nale¿y:
   Je¶li uruchomisz glena a katalog z emotkami nie bêdzie istnia³ (dok³adniej:
   emo-utf.xml), automatycznie wy³±czy siê opcja u¿ywania emotek -- po przegraniu
   wszystkiego jak opisano powy¿ej musisz edytowaæ ~/.glen/prefs i ustawiæ opcjê
-  pref_chat_use_emotes na true (grupa [chat])
+  pref_chat_use_emotes na true (grupa [chat]), lub ustawiæ to w preferencjach
+  programu.
+
+  Jeszcze s³owo o emotkach: Je¶li w katalogu:
+  
+  /usr/local/share/pixmaps/glen/emotes/
+
+  znajduj± siê inne podkatalogi, glen potraktuje je jako katalogi z zestawami
+  ikon, pod warunkiem ¿e w ¶rodku bêdzie le¿a³ plik emo-utf.xml. W oknie z
+  ustawieniami programu powinny pojawiæ siê mo¿liwe zestawy do wyboru.
   
 - w katalogu powy¿ej wykonaæ: 
   iconv -f windows-1250 -t utf-8 emo.xml > emo-utf.xml 
