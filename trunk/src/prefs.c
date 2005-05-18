@@ -1,8 +1,11 @@
+/* vim: set tw=0: */
 
 #include <libtlen2/libtlen2.h>
 #include "prefs.h"
 #include "tlen.h"
 #include "misc.h"
+
+/* XXX: Ten kod jest jaki¶ dziwny. U¿yæ gconf, jak na gnomowy program przysta³o. */
 
 /* tlen */
 gchar *pref_tlen_id = "twoj_login@o2.pl";
@@ -31,6 +34,14 @@ gboolean pref_chat_enter_sends = TRUE;
 
 /* misc */
 gchar *pref_misc_browser_cmd = "gnome-moz-remote --newwin %s";
+
+/* Okno g³ówne */
+/* Pozycja okna */
+guint pref_win_main_pos_x = 100;
+guint pref_win_main_pos_y = 100;
+/* Rozmiar okna glownego. */
+guint pref_win_main_width = 250;
+guint pref_win_main_height = 400;
 
 static GKeyFile *pref_key_file = NULL;
 
@@ -99,6 +110,11 @@ gboolean prefs_load()
 
 	pref_get_val("misc", pref_misc_browser_cmd, string);
 
+	pref_get_val("win_main", pref_win_main_pos_x, integer);
+	pref_get_val("win_main", pref_win_main_pos_y, integer);
+	pref_get_val("win_main", pref_win_main_width, integer);
+	pref_get_val("win_main", pref_win_main_height, integer);
+
 	return TRUE;
 }
 
@@ -158,6 +174,11 @@ gboolean prefs_save()
 
 	pref_set_val("misc", pref_misc_browser_cmd, string);
 	
+	pref_set_val("win_main", pref_win_main_pos_x, integer);
+	pref_set_val("win_main", pref_win_main_pos_y, integer);
+	pref_set_val("win_main", pref_win_main_width, integer);
+	pref_set_val("win_main", pref_win_main_height, integer);
+
 	fp = fopen(path, "w");
 	if(fp == NULL) {
 		/* XXX: okienko */

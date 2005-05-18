@@ -43,6 +43,11 @@ void win_main_clear();
 void win_main_update_all();
 void win_main_expand_all();
 
+/* Zapisuje pozycjê i rozmiar okna do zmiennych, które potem wyl±duj± w configu. */
+void win_main_geometry_save();
+/* Przywraca pozycjê i rozmiar zapisane funkcj± wy¿ej. */
+void win_main_geometry_restore();
+
 /* FIXME: lepsze miejsce dla tego */
 GtkWidget *get_status_icon(guint status);
 GtkWidget *get_status_icon_new(guint status);

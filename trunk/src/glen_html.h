@@ -1,3 +1,4 @@
+/* vim: set tw=0: */
 
 #ifndef GLEN_HTML_H
 #define GLEN_HTML_H

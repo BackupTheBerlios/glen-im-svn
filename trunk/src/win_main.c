@@ -146,6 +146,7 @@ GtkWidget * win_main_create()
 
 	saved_status = o2_get_status(); 
 	win_main_reset_autoaway_timer();
+	win_main_geometry_restore();
 	
 	return win_main;
 }
@@ -324,7 +325,9 @@ void win_main_toggle_hidden()
 	if(main_win_hidden == TRUE) {
 		gtk_widget_show(win_main);
 		gtk_widget_grab_focus(win_main);
+		win_main_geometry_restore();
 	} else {
+		win_main_geometry_save();
 		gtk_widget_hide(win_main);
 	}
 
@@ -587,6 +590,8 @@ GdkPixbuf *get_status_icon_pixbuf(guint status)
 
 void quit_app_cb()
 {
+	win_main_geometry_save();
+
 	if(pref_status_save_desc) {
 		if(o2_get_desc() == NULL)
 			pref_status_desc = "";
@@ -1305,5 +1310,17 @@ static gboolean icon_blink(gpointer data)
 	return ret;
 }
 
+void win_main_geometry_save()
+{
+	gtk_window_get_position(GTK_WINDOW(win_main), &pref_win_main_pos_x, &pref_win_main_pos_y);
+	gtk_window_get_size(GTK_WINDOW(win_main), &pref_win_main_width, &pref_win_main_height);
+	printf("save:%i %i   %i %i\n", pref_win_main_pos_x, pref_win_main_pos_y, pref_win_main_width, pref_win_main_height);
+}
 
+void win_main_geometry_restore()
+{
+	gtk_window_move(GTK_WINDOW(win_main), pref_win_main_pos_x, pref_win_main_pos_y);
+	gtk_window_resize(GTK_WINDOW(win_main), pref_win_main_width, pref_win_main_height);
+	printf("res: %i %i   %i %i\n", pref_win_main_pos_x, pref_win_main_pos_y, pref_win_main_width, pref_win_main_height);
+}
 

@@ -36,6 +36,14 @@ extern gboolean pref_userlist_autoexpand; /* rozwijanie grup */
 /* rozne */
 extern gchar *pref_misc_browser_cmd;
 
+/* Okno glowne */
+/* Pozycja okna */
+extern guint pref_win_main_pos_x;
+extern guint pref_win_main_pos_y;
+/* Rozmiar okna glownego. */
+extern guint pref_win_main_width;
+extern guint pref_win_main_height;
+
 gboolean prefs_load();
 gboolean prefs_save();
 

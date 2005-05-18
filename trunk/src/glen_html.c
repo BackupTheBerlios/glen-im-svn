@@ -1,12 +1,10 @@
-
+/* vim: set tw=0: */
 #include "emotes.h"
 #include "prefs.h"
 #include "glen_html.h"
 
-static void url_requested_cb(GtkHTML *, const gchar *url,
-	GtkHTMLStream *stream);
-static void link_clicked_cb(GtkHTML *, const gchar *url,
-	gpointer data);
+static void url_requested_cb(GtkHTML *, const gchar *url, GtkHTMLStream *stream);
+static void link_clicked_cb(GtkHTML *, const gchar *url, gpointer data);
 
 static const gchar *header = 
 "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html;"
@@ -42,8 +40,7 @@ GtkHTMLStream * glen_html_begin(GtkHTML *html)
 	return stream;
 }
 
-static void url_requested_cb(GtkHTML *html, const char *url,
-	GtkHTMLStream *stream)
+static void url_requested_cb(GtkHTML *html, const char *url, GtkHTMLStream *stream)
 {
 	Emote *e;
 
@@ -54,8 +51,7 @@ static void url_requested_cb(GtkHTML *html, const char *url,
 	gtk_html_flush(html);
 }
 
-static void link_clicked_cb(GtkHTML *html, const gchar *url,
-	gpointer data)
+static void link_clicked_cb(GtkHTML *html, const gchar *url, gpointer data)
 {
 	gchar buf[2048];
 
