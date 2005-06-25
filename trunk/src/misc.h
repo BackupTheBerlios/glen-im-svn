@@ -18,6 +18,9 @@ const gchar *get_status_desc(guint status);
 /* "Dostêpny" -> TLEN_PRESENCE_AVAILABLE */
 guint get_status_num(const gchar *name);
 
+/* Bezpieczny sprintf. Zwraca 0 gdy wszystko ok, -1 gdy cos nie wyszlo */
+int xsprintf(char *buf, size_t buflen, const char *fmt, ...);
+
 gchar *text_view_get_text(GtkTextView *v);
 void text_view_clear(GtkTextView *v);
 void text_view_set_text(GtkTextView *v, const gchar *);

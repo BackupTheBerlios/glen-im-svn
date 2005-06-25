@@ -321,3 +321,20 @@ GtkWidget *yes_no_dialog(GtkWidget *win, const gchar *m)
 
 	return w;
 }
+
+int xsprintf(char *buf, size_t buflen, const char *fmt, ...)
+{
+	int ret;
+	va_list vp;
+
+	va_start(vp, fmt);
+	ret = vsnprintf(buf, buflen, fmt, vp);
+	va_end(vp);
+
+	if (ret < 0 || ret >= buflen) {
+		return -1;
+	}
+
+	return 0;
+}
+
