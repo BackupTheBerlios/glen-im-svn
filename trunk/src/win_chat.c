@@ -1,7 +1,9 @@
+/* vim: set tw=0: */
 
 #include <gnome.h>
 #include <gtkhtml/gtkhtml.h>
 #include <gtkhtml/gtkhtml-stream.h>
+#include <gtkhtml/htmlselection.h>
 #include <string.h>
 #include <stdio.h>
 #include "win_main.h"
@@ -113,8 +115,12 @@ Chat * win_chat_get(const gchar *id, gboolean create, gboolean show)
 	c = win_chat_create(id);
 	g_slist_append(&chat_list, c);
 
-	if(show == TRUE)
+	if(show == TRUE) {
+		/* Wyrzuc okno na pierwszy plan/aktualny desktop, je¶li jest
+		 * ju¿ otwarte */
+		gtk_window_present(GTK_WINDOW(c->win));
 		gtk_widget_show_all(GTK_WIDGET(c->win));
+	}
 
 	win_chat_update_title(c->user);
 
@@ -418,9 +424,16 @@ static void input_copy_clipboard_cb(GtkTextView *textview, gpointer user_data)
 		return;
 	}
 
-	/* w tym miejscu zakladamy, ze skoro nie ma zaznaczenia w input user
-	 * chce skopiowac to co jest w widgecie wyjsciowym */
-	gtk_html_copy(c->output);
+	/* Sprawdzamy, czy jest zaznaczenie w gtkhtml. Sposob jest 'dziwny', innego jak na
+	   razie nie znalazlem. Sprawdzanie jest potrzebne, bo gtktml moze miec zaznaczenie
+	   rowne "\n" nawet gdy nie jest NIC zaznaczone. W takim wypadku gdy user wciska
+	   ctrl+C traci swoj stary schowek na rzecz pustego. A to jest ZLE. */
+
+	if (html_engine_is_selection_active(c->output->engine)) {
+		/* w tym miejscu zakladamy, ze skoro nie ma zaznaczenia w input user
+		 * chce skopiowac to co jest w widgecie wyjsciowym */
+		gtk_html_copy(c->output);
+	}
 }
 
 static gboolean window_icon_blink(gpointer data)

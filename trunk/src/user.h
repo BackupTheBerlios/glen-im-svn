@@ -1,3 +1,4 @@
+/* vim: set tw=0: */
 
 #ifndef USER_H
 #define USER_H
@@ -34,6 +35,11 @@ struct structUser {
 
 	/* otwarte okno do wysylania wiadomosci */
 	GtkWidget *win_msg_send;
+
+	/* Lista ArchEntry do zrzucenia na dysk */
+	GSList *history;
+	/* Plik do którego leci historia */
+	FILE *fp;
 };
 
 typedef struct structUser User;

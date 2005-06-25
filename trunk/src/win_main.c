@@ -959,20 +959,19 @@ static void tree_row_activated_cb(GtkTreeView *tv, GtkTreePath *path,
 	guint type;
 	User *u = NULL;
 
-	if(gtk_tree_model_get_iter(GTK_TREE_MODEL(model), &iter,
-		path) == FALSE)
+	if (gtk_tree_model_get_iter(GTK_TREE_MODEL(model), &iter, path) == FALSE)
 		return;
 		
-	gtk_tree_model_get(GTK_TREE_MODEL(model), &iter, COLUMN_TYPE,
-		&type, COLUMN_PTR, &u, -1);
+	gtk_tree_model_get(GTK_TREE_MODEL(model), &iter, COLUMN_TYPE, &type, COLUMN_PTR, &u, -1);
 
-		if(type == TYPE_USER) {
+	if (type == TYPE_USER) {
 		win_chat_get(u->id, TRUE, TRUE);
 	}
 }
 
 static gboolean delete_win_cb(GtkWidget *widget, gpointer data)
 {
+	win_main_geometry_save();
 	gtk_widget_hide(widget);
 	main_win_hidden = TRUE;
 
@@ -983,10 +982,11 @@ static gboolean window_state_cb(GtkWidget *w, GdkEvent *ev)
 {
 	GdkEventWindowState *ws = (GdkEventWindowState *)ev;
 
-	if(ws->new_window_state & GDK_WINDOW_STATE_ICONIFIED)
+	if (ws->new_window_state & GDK_WINDOW_STATE_ICONIFIED) {
 		main_win_iconified = TRUE;
-	else
+	} else {
 		main_win_iconified = FALSE;
+	}
 
 	return TRUE;
 }
