@@ -103,7 +103,7 @@ enum ColumnType {
 #define TYPE_GROUP 0
 #define TYPE_USER 1
 
-GtkWidget * win_main_create()
+GtkWidget * win_main_create(void)
 {
 	gchar *s;
 	
@@ -151,7 +151,7 @@ GtkWidget * win_main_create()
 	return win_main;
 }
 
-void win_main_quit()
+void win_main_quit(void)
 {
 	quit_app_cb();
 }
@@ -298,7 +298,7 @@ void win_main_user_remove(User *u)
 	u->text = NULL;
 }
 
-void win_main_update_all()
+void win_main_update_all(void)
 {
 	gtk_widget_queue_draw(win_main);
 	/* robimy to tutaj zeby wymusic ponowne sortowanie */
@@ -306,7 +306,7 @@ void win_main_update_all()
 		COLUMN_TYPE, sort_func, NULL, NULL);
 }
 
-void win_main_expand_all()
+void win_main_expand_all(void)
 {
 	GtkWidget *treeview;
 
@@ -315,12 +315,12 @@ void win_main_expand_all()
 	gtk_tree_view_expand_all(GTK_TREE_VIEW(treeview));
 }
 
-gboolean win_main_is_iconified()
+gboolean win_main_is_iconified(void)
 {
 	return main_win_iconified;
 }
 
-void win_main_toggle_hidden()
+void win_main_toggle_hidden(void)
 {
 	if(main_win_hidden == TRUE) {
 		gtk_widget_show(win_main);
@@ -433,7 +433,7 @@ void win_main_start_icon_blinking(guint status)
 	g_free(s);
 }
 
-void win_main_stop_icon_blinking()
+void win_main_stop_icon_blinking(void)
 {
 	/*
 	GtkWidget *w, *img;
@@ -453,7 +453,7 @@ void win_main_stop_icon_blinking()
 	*/
 }
 
-void win_main_reset_autoaway_timer()
+void win_main_reset_autoaway_timer(void)
 {
 	guint status;
 	
@@ -487,7 +487,7 @@ void win_main_reset_autoaway_timer()
 		autoaway_timeout_cb, 0);
 }
 
-void win_main_clear()
+void win_main_clear(void)
 {
 	GSList *l;
 
@@ -519,22 +519,26 @@ static gboolean autoaway_timeout_cb(gpointer data)
 		saved_desc = g_strdup(o2_get_desc());
 		if(pref_status_auto_away_desc) {
 			/* ugly */
-			snprintf(buf, sizeof(buf), "%s%s[%s %s]",
-				(saved_desc == NULL ? "" : saved_desc),
-				(saved_desc == NULL ? "" : " "),
-				get_time(NULL), get_date(NULL));
-		} else
-			strncpy(buf, saved_desc, strlen(saved_desc));
+			snprintf(buf, sizeof(buf), "%s%s[%s %s]", (saved_desc == NULL ? "" : saved_desc),
+				(saved_desc == NULL ? "" : " "), get_time(NULL), get_date(NULL));
+		} else {
+			if (saved_desc != NULL) {
+				strncpy(buf, saved_desc, strlen(saved_desc));
+			} else {
+				buf[0] = '\0';
+			}
+		}
 		
-		win_main_set_status(TLEN_PRESENCE_AWAY, buf);
-		o2_set_status(TLEN_PRESENCE_AWAY, buf);
+		if (buf[0] != '\0') {
+			win_main_set_status(TLEN_PRESENCE_AWAY, buf);
+			o2_set_status(TLEN_PRESENCE_AWAY, buf);
+		}
 		
-		autoaway_timer_id = gtk_timeout_add(
-			pref_status_auto_bbl_time * 60 * 1000, 
-			autoaway_timeout_cb, (gpointer)1);
+		autoaway_timer_id = gtk_timeout_add(pref_status_auto_bbl_time * 60 * 1000, autoaway_timeout_cb, (gpointer)1);
 		is_auto_away = TRUE;
 	} else {
 		snprintf(buf, sizeof(buf), "%s", o2_get_desc());
+
 		win_main_set_status(TLEN_PRESENCE_EXT_AWAY, buf);
 		o2_set_status(TLEN_PRESENCE_EXT_AWAY, buf);
 	}
@@ -588,7 +592,7 @@ GdkPixbuf *get_status_icon_pixbuf(guint status)
 	return gtk_image_get_pixbuf(GTK_IMAGE(i));
 }
 
-void quit_app_cb()
+void quit_app_cb(void)
 {
 	win_main_geometry_save();
 
@@ -610,7 +614,7 @@ void quit_app_cb()
 	gtk_main_quit();
 }
 
-static void create_model()
+static void create_model(void)
 {
 	model = gtk_tree_store_new(NUM_COLS, G_TYPE_STRING,
 		G_TYPE_POINTER, G_TYPE_INT);
@@ -618,7 +622,7 @@ static void create_model()
 		COLUMN_TYPE, GTK_SORT_ASCENDING);
 }
 
-static void create_view()
+static void create_view(void)
 {
 	GtkTreeView *treeview;
 	GtkTreeViewColumn *col;
@@ -661,7 +665,7 @@ static void create_view()
 		G_CALLBACK(tree_row_activated_cb), NULL);
 }
 
-static void create_status_menu()
+static void create_status_menu(void)
 {
 	GtkButton *b;
 	GtkWidget *i;
@@ -762,7 +766,7 @@ static void create_status_menu()
 	
 }
 
-static void create_userlist_menu()
+static void create_userlist_menu(void)
 {
 	gchar *s;
 	GtkWidget *i;
@@ -851,7 +855,7 @@ static void create_userlist_menu()
 	gtk_window_add_accel_group(GTK_WINDOW(win_main), accel);
 }
 
-static void create_main_menu()
+static void create_main_menu(void)
 {
 	gchar *s;
 	GtkWidget *i;
@@ -930,7 +934,7 @@ static void create_main_menu()
 	gtk_window_add_accel_group(GTK_WINDOW(win_main), accel);
 }
 
-static gboolean status_icons_load()
+static gboolean status_icons_load(void)
 {
 	const gchar *files[] = {
 		"glen/status-avail.png", "glen/status-away.png",
@@ -1310,14 +1314,14 @@ static gboolean icon_blink(gpointer data)
 	return ret;
 }
 
-void win_main_geometry_save()
+void win_main_geometry_save(void)
 {
 	gtk_window_get_position(GTK_WINDOW(win_main), &pref_win_main_pos_x, &pref_win_main_pos_y);
 	gtk_window_get_size(GTK_WINDOW(win_main), &pref_win_main_width, &pref_win_main_height);
 	printf("save:%i %i   %i %i\n", pref_win_main_pos_x, pref_win_main_pos_y, pref_win_main_width, pref_win_main_height);
 }
 
-void win_main_geometry_restore()
+void win_main_geometry_restore(void)
 {
 	gtk_window_move(GTK_WINDOW(win_main), pref_win_main_pos_x, pref_win_main_pos_y);
 	gtk_window_resize(GTK_WINDOW(win_main), pref_win_main_width, pref_win_main_height);
