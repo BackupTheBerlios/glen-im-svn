@@ -4,5 +4,7 @@
 <glade-project>
   <name>glen</name>
   <program_name>glen</program_name>
+  <gettext_support>FALSE</gettext_support>
   <use_widget_names>TRUE</use_widget_names>
+  <gnome_help_support>TRUE</gnome_help_support>
 </glade-project>
