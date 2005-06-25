@@ -20,7 +20,6 @@ glen_SOURCES = \
 	misc.h misc.c \
 	prefs.c prefs.h \
 	support.c support.h \
-	tester.c \
 	tlen.c tlen.h \
 	user.c user.h \
 	win_chat.c win_chat.h \
