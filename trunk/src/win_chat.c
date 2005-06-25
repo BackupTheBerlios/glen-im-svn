@@ -1,5 +1,6 @@
 /* vim: set tw=0: */
 
+#include "support.h"
 #include <gnome.h>
 #include <gtkhtml/gtkhtml.h>
 #include <gtkhtml/gtkhtml-stream.h>
@@ -10,12 +11,11 @@
 #include "glen_html.h"
 #include "win_chat.h"
 #include "interface.h"
-#include "support.h"
 #include "misc.h"
 #include "emotes.h"
 #include "tlen.h"
 #include "prefs.h"
-#include "ctype.h"
+#include <ctype.h>
 
 static GSList chat_list;
 
@@ -91,12 +91,12 @@ Chat * win_chat_get(const gchar *id, gboolean create, gboolean show)
 	u1 = strip_user(id);
 
 	/* znajdz rozmowe w liscie */
-	for(l = &chat_list; l != NULL; l = l->next) {
+	for (l = &chat_list; l != NULL; l = l->next) {
 		c = (Chat *)l->data;
-		if(c != NULL) {
-			if(g_str_has_prefix(c->id, u1) == TRUE) {
+		if (c != NULL) {
+			if (g_str_has_prefix(c->id, u1) == TRUE) {
 				g_free(u1);
-				if(show == TRUE) {
+				if (show == TRUE) {
 					w = lookup_widget(GTK_WIDGET(c->win), "input");
 					gtk_widget_grab_focus(w);
 					gtk_widget_show_all(GTK_WIDGET(c->win));
@@ -108,14 +108,14 @@ Chat * win_chat_get(const gchar *id, gboolean create, gboolean show)
 
 	g_free(u1);
 	c = NULL;
-	if(create == FALSE)
+	if (create == FALSE)
 		return c;
 
 	/* rozmowa z tym id nie istnieje, stworz nowa */
 	c = win_chat_create(id);
 	g_slist_append(&chat_list, c);
 
-	if(show == TRUE) {
+	if (show == TRUE) {
 		/* Wyrzuc okno na pierwszy plan/aktualny desktop, je¶li jest
 		 * ju¿ otwarte */
 		gtk_window_present(GTK_WINDOW(c->win));
@@ -230,11 +230,11 @@ void win_chat_set_typing(const gchar *id, gboolean on)
 	gchar *s;
 
 	c = win_chat_get(id, FALSE, FALSE);
-	if(c == NULL)
+	if (c == NULL)
 		return;
 
 	img = lookup_widget(GTK_WIDGET(c->win), "image_typing");
-	if(on == TRUE) {
+	if (on == TRUE) {
 		pb = typing_on_pixbuf;
 		s = toutf("Twój rozmówca pisze wiadomo¶æ");
 	} else {
@@ -260,20 +260,20 @@ void win_chat_update_title(const User *u)
 	
 	c = win_chat_get(u->id, FALSE, FALSE);
 
-	if(c == NULL)
+	if (c == NULL)
 		return;
 
-	if(u->desc == NULL)
+	if (u->desc == NULL)
 		snprintf(buf, sizeof(buf), "%s", u->name);
 	else {
 		snprintf(buf, sizeof(buf), "%s (%s)", u->name, u->desc);
 		p = buf;
 		/* zastap newline spacjami */
 		do {
-			if(*p == '\n')
+			if (*p == '\n')
 				*p = ' ';
 			p++;
-		} while(*p != '\0');
+		} while (*p != '\0');
 	}
 	
 	gtk_window_set_title(c->win, buf);
@@ -292,7 +292,7 @@ void win_chat_append(const gchar *id, const gchar *msg, gboolean me,
 	c = win_chat_get(id, TRUE, TRUE);
 	g_assert(c != NULL);
 
-	if(time == NULL)
+	if (time == NULL)
 		tim = (gchar *)get_time(NULL);
 	else
 		tim = (gchar *)time;
@@ -300,12 +300,12 @@ void win_chat_append(const gchar *id, const gchar *msg, gboolean me,
 
 	/* XXX: dodawanie usera do listy jako brak autoryzacji */
 	u = user_get(id);
-	if(u == NULL)
+	if (u == NULL)
 		name = (gchar *)id;
 	else
 		name = u->name;
 	
-	if(me)
+	if (me)
 		gtk_html_stream_printf(c->stream, append_fmt, my_bg,
 				tim, pref_chat_my_name, pref_tlen_id, m);
 	else
@@ -318,7 +318,7 @@ void win_chat_append(const gchar *id, const gchar *msg, gboolean me,
 	gtk_html_flush(c->output);
 	gtk_html_command(c->output, "scroll-eod");
 	
-	if(c->need_blinking == TRUE && c->blink_state == BlinkOff) {
+	if (c->need_blinking == TRUE && c->blink_state == BlinkOff) {
 		g_timeout_add(750, window_icon_blink, c);
 	}
 }
@@ -345,7 +345,7 @@ static void send_btn_clicked_cb(GtkButton *button, gpointer user_data)
 	Chat *c = (Chat *)user_data;
 	
 	text = text_view_get_text(GTK_TEXT_VIEW(c->input));
-	if(strlen(text) != 0) {
+	if (strlen(text) != 0) {
 		win_chat_append(c->id, text, TRUE, NULL);
 		o2_send_chat(c->id, text);
 	}
@@ -363,15 +363,15 @@ static gboolean input_key_press_cb (GtkWidget *widget, GdkEventKey *event,
 	switch(event->keyval) {
 	case GDK_Return:
 	case GDK_KP_Enter:
-		if(o2_is_connected() == FALSE) {
+		if (o2_is_connected() == FALSE) {
 			puts("NOT CONNECTED");
 			return TRUE;
 		}
-		if(c->enter_sends == FALSE)
+		if (c->enter_sends == FALSE)
 			break;
 
 		text = text_view_get_text(GTK_TEXT_VIEW(widget));
-		if(strlen(text) != 0) {
+		if (strlen(text) != 0) {
 			win_chat_append(c->id, text, TRUE, NULL);
 			o2_send_chat(c->id, text);
 			win_main_reset_autoaway_timer();
@@ -383,8 +383,11 @@ static gboolean input_key_press_cb (GtkWidget *widget, GdkEventKey *event,
 		c->notify_sent = FALSE;
 		return TRUE;
 		break;
+	case GDK_Escape:
+		gtk_widget_hide_all(GTK_WIDGET(c->win));
+		break;
 	default:
-		if(isascii(event->keyval) && c->notify_sent == FALSE) {
+		if (isascii(event->keyval) && c->notify_sent == FALSE) {
 			c->notify_sent = TRUE;
 			o2_send_notify(c->id, TLEN_NOTIFY_TYPING);
 			puts("sending notify");
@@ -420,7 +423,7 @@ static void input_copy_clipboard_cb(GtkTextView *textview, gpointer user_data)
 
 	/* jesli jest zaznaczenie w input zostawiamy normalne zachowanie */
 	buf = gtk_text_view_get_buffer(textview);
-	if(gtk_text_buffer_get_selection_bounds(buf, &start, &end) == TRUE) {
+	if (gtk_text_buffer_get_selection_bounds(buf, &start, &end) == TRUE) {
 		return;
 	}
 
@@ -442,13 +445,13 @@ static gboolean window_icon_blink(gpointer data)
 	gboolean ret;
 	GdkPixbuf *pb;
 
-	if(c->need_blinking == FALSE) {
+	if (c->need_blinking == FALSE) {
 		pb = get_status_icon_pixbuf(c->user->status);
 		c->blink_state = BlinkOff;
 	//	puts("blink off");
 		ret = FALSE;
 	} else {
-		if(c->blink_state == BlinkAlt) {
+		if (c->blink_state == BlinkAlt) {
 			pb = get_status_icon_pixbuf(c->user->status);
 			c->blink_state = BlinkNormal;
 		} else {
@@ -469,11 +472,11 @@ static gboolean window_state_cb(GtkWidget *w, GdkEvent *ev, gpointer data)
 	GdkEventWindowState *ws = (GdkEventWindowState *)ev;
 	Chat *c = (Chat *)data;
 
-	if(ws->new_window_state & GDK_WINDOW_STATE_ICONIFIED ||
+	if (ws->new_window_state & GDK_WINDOW_STATE_ICONIFIED ||
 		ws->new_window_state & GDK_WINDOW_STATE_BELOW) {
 		printf("%s needs blinking\n", c->id);
 		c->need_blinking = TRUE;
-	} else if(ws->new_window_state & GDK_WINDOW_STATE_ABOVE ||
+	} else if (ws->new_window_state & GDK_WINDOW_STATE_ABOVE ||
 		ws->new_window_state & ~GDK_WINDOW_STATE_ICONIFIED) {
 		printf("%s DOESNT need blinking\n", c->id);
 		c->need_blinking = FALSE;
@@ -488,7 +491,7 @@ static gboolean visibility_changed_cb(GtkWidget *w, GdkEvent *ev,
 	GdkEventVisibility *v = (GdkEventVisibility *)ev;
 	Chat *c = (Chat *)data;
 
-	if(v->state == GDK_VISIBILITY_UNOBSCURED && 
+	if (v->state == GDK_VISIBILITY_UNOBSCURED && 
 		c->blink_state == BlinkOff) {
 		c->need_blinking = FALSE;
 	} else {
