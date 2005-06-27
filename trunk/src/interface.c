@@ -44,9 +44,8 @@ create_win_main (void)
   gtk_widget_set_name (win_main, "win_main");
   gtk_widget_set_size_request (win_main, 200, 300);
   gtk_container_set_border_width (GTK_CONTAINER (win_main), 1);
-  gtk_window_set_title (GTK_WINDOW (win_main), _("glen"));
+  gtk_window_set_title (GTK_WINDOW (win_main), "glen");
   gtk_window_set_default_size (GTK_WINDOW (win_main), 250, 400);
-  gtk_window_set_skip_taskbar_hint (GTK_WINDOW (win_main), TRUE);
   gtk_window_set_gravity (GTK_WINDOW (win_main), GDK_GRAVITY_NORTH_EAST);
 
   vbox1 = gtk_vbox_new (FALSE, 2);
@@ -151,7 +150,7 @@ create_win_chat (void)
   gtk_widget_set_name (win_chat, "win_chat");
   gtk_widget_set_size_request (win_chat, 300, 280);
   gtk_widget_set_events (win_chat, GDK_VISIBILITY_NOTIFY_MASK);
-  gtk_window_set_title (GTK_WINDOW (win_chat), _("win_chat"));
+  gtk_window_set_title (GTK_WINDOW (win_chat), "win_chat");
   gtk_window_set_default_size (GTK_WINDOW (win_chat), 400, 250);
 
   vbox = gtk_vbox_new (FALSE, 0);
@@ -211,7 +210,7 @@ create_win_chat (void)
   gtk_widget_set_name (clear_btn, "clear_btn");
   gtk_widget_show (clear_btn);
   gtk_box_pack_start (GTK_BOX (hbox_bottom), clear_btn, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, clear_btn, _("Wyczy\305\233\304\207 okno rozmowy"), NULL);
+  gtk_tooltips_set_tip (tooltips, clear_btn, "Wyczy\305\233\304\207 okno rozmowy", NULL);
   gtk_button_set_focus_on_click (GTK_BUTTON (clear_btn), FALSE);
 
   image6 = gtk_image_new_from_stock ("gtk-clear", GTK_ICON_SIZE_BUTTON);
@@ -223,7 +222,7 @@ create_win_chat (void)
   gtk_widget_set_name (enter_sends_btn, "enter_sends_btn");
   gtk_widget_show (enter_sends_btn);
   gtk_box_pack_start (GTK_BOX (hbox_bottom), enter_sends_btn, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, enter_sends_btn, _("Je\305\233li przycisk jest wci\305\233ni\304\231ty, klawisz Enter wysy\305\202a wiadomo\305\233\304\207"), NULL);
+  gtk_tooltips_set_tip (tooltips, enter_sends_btn, "Je\305\233li przycisk jest wci\305\233ni\304\231ty, klawisz Enter wysy\305\202a wiadomo\305\233\304\207", NULL);
   gtk_button_set_focus_on_click (GTK_BUTTON (enter_sends_btn), FALSE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (enter_sends_btn), TRUE);
 
@@ -236,7 +235,7 @@ create_win_chat (void)
   gtk_widget_set_name (emote_btn, "emote_btn");
   gtk_widget_show (emote_btn);
   gtk_box_pack_start (GTK_BOX (hbox_bottom), emote_btn, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, emote_btn, _("Wstaw emotikon\304\231"), NULL);
+  gtk_tooltips_set_tip (tooltips, emote_btn, "Wstaw emotikon\304\231", NULL);
   gtk_button_set_focus_on_click (GTK_BUTTON (emote_btn), FALSE);
 
   image8 = gtk_image_new_from_stock ("gtk-execute", GTK_ICON_SIZE_BUTTON);
@@ -255,7 +254,7 @@ create_win_chat (void)
   gtk_widget_set_name (send_btn, "send_btn");
   gtk_widget_show (send_btn);
   gtk_box_pack_start (GTK_BOX (hbox_bottom), send_btn, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, send_btn, _("Wy\305\233lij wiadomo\305\233\304\207 do rozm\303\263wcy"), NULL);
+  gtk_tooltips_set_tip (tooltips, send_btn, "Wy\305\233lij wiadomo\305\233\304\207 do rozm\303\263wcy", NULL);
   gtk_button_set_focus_on_click (GTK_BUTTON (send_btn), FALSE);
 
   alignment1 = gtk_alignment_new (0.5, 0.5, 0, 0);
@@ -273,7 +272,7 @@ create_win_chat (void)
   gtk_widget_show (image1);
   gtk_box_pack_start (GTK_BOX (hbox3), image1, FALSE, FALSE, 0);
 
-  label2 = gtk_label_new_with_mnemonic (_("_Wy\305\233lij"));
+  label2 = gtk_label_new_with_mnemonic ("_Wy\305\233lij");
   gtk_widget_set_name (label2, "label2");
   gtk_widget_show (label2);
   gtk_box_pack_start (GTK_BOX (hbox3), label2, FALSE, FALSE, 0);
@@ -282,7 +281,7 @@ create_win_chat (void)
   gtk_widget_set_name (close_btn, "close_btn");
   gtk_widget_show (close_btn);
   gtk_box_pack_start (GTK_BOX (hbox_bottom), close_btn, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, close_btn, _("Zamknij okno"), NULL);
+  gtk_tooltips_set_tip (tooltips, close_btn, "Zamknij okno", NULL);
   gtk_button_set_focus_on_click (GTK_BUTTON (close_btn), FALSE);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -386,7 +385,7 @@ create_win_prefs (void)
   win_prefs = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (win_prefs, "win_prefs");
   gtk_container_set_border_width (GTK_CONTAINER (win_prefs), 12);
-  gtk_window_set_title (GTK_WINDOW (win_prefs), _("Ustawienia"));
+  gtk_window_set_title (GTK_WINDOW (win_prefs), "Ustawienia");
   gtk_window_set_resizable (GTK_WINDOW (win_prefs), FALSE);
   win_prefs_icon_pixbuf = create_pixbuf ("glen/status-avail.png");
   if (win_prefs_icon_pixbuf)
@@ -432,7 +431,7 @@ create_win_prefs (void)
   gtk_table_set_row_spacings (GTK_TABLE (table5), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table5), 6);
 
-  label48 = gtk_label_new (_("Has\305\202o:"));
+  label48 = gtk_label_new ("Has\305\202o:");
   gtk_widget_set_name (label48, "label48");
   gtk_widget_show (label48);
   gtk_table_attach (GTK_TABLE (table5), label48, 0, 1, 1, 2,
@@ -440,7 +439,7 @@ create_win_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label48), 0, 0.5);
 
-  label47 = gtk_label_new (_("Identyfikator:"));
+  label47 = gtk_label_new ("Identyfikator:");
   gtk_widget_set_name (label47, "label47");
   gtk_widget_show (label47);
   gtk_table_attach (GTK_TABLE (table5), label47, 0, 1, 0, 1,
@@ -455,7 +454,7 @@ create_win_prefs (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_size_request (entry_id, 200, -1);
-  gtk_tooltips_set_tip (tooltips, entry_id, _("Tw\303\263j login w sieci Tlen.pl"), NULL);
+  gtk_tooltips_set_tip (tooltips, entry_id, "Tw\303\263j login w sieci Tlen.pl", NULL);
 
   entry_pass = gtk_entry_new ();
   gtk_widget_set_name (entry_pass, "entry_pass");
@@ -464,27 +463,27 @@ create_win_prefs (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_size_request (entry_pass, 200, -1);
-  gtk_tooltips_set_tip (tooltips, entry_pass, _("Je\305\233li nie podasz has\305\202a b\304\231dziesz o nie pytany przy ka\305\274dym uruchomieniu programu"), NULL);
+  gtk_tooltips_set_tip (tooltips, entry_pass, "Je\305\233li nie podasz has\305\202a b\304\231dziesz o nie pytany przy ka\305\274dym uruchomieniu programu", NULL);
   gtk_entry_set_visibility (GTK_ENTRY (entry_pass), FALSE);
 
-  label46 = gtk_label_new (_("<b>Login</b>"));
+  label46 = gtk_label_new ("<b>Login</b>");
   gtk_widget_set_name (label46, "label46");
   gtk_widget_show (label46);
   gtk_frame_set_label_widget (GTK_FRAME (frame7), label46);
   gtk_label_set_use_markup (GTK_LABEL (label46), TRUE);
 
-  label41 = gtk_label_new (_("Identyfikacja"));
+  label41 = gtk_label_new ("Identyfikacja");
   gtk_widget_set_name (label41, "label41");
   gtk_widget_show (label41);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0), label41);
 
-  label49 = gtk_label_new (_("<b><span size=\"x-large\">Tu co\305\233 b\304\231dzie :)</span></b>"));
+  label49 = gtk_label_new ("<b><span size=\"x-large\">Tu co\305\233 b\304\231dzie :)</span></b>");
   gtk_widget_set_name (label49, "label49");
   gtk_widget_show (label49);
   gtk_container_add (GTK_CONTAINER (notebook), label49);
   gtk_label_set_use_markup (GTK_LABEL (label49), TRUE);
 
-  label42 = gtk_label_new (_("Okno g\305\202\303\263wne"));
+  label42 = gtk_label_new ("Okno g\305\202\303\263wne");
   gtk_widget_set_name (label42, "label42");
   gtk_widget_show (label42);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 1), label42);
@@ -515,14 +514,14 @@ create_win_prefs (void)
   gtk_table_set_row_spacings (GTK_TABLE (table8), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table8), 6);
 
-  checkbutton_emots = gtk_check_button_new_with_mnemonic (_("U\305\274ywaj emotikon w oknie rozmowy"));
+  checkbutton_emots = gtk_check_button_new_with_mnemonic ("U\305\274ywaj emotikon w oknie rozmowy");
   gtk_widget_set_name (checkbutton_emots, "checkbutton_emots");
   gtk_widget_show (checkbutton_emots);
   gtk_table_attach (GTK_TABLE (table8), checkbutton_emots, 0, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  label_emote_set = gtk_label_new (_("Zestaw emotikon"));
+  label_emote_set = gtk_label_new ("Zestaw emotikon");
   gtk_widget_set_name (label_emote_set, "label_emote_set");
   gtk_widget_show (label_emote_set);
   gtk_table_attach (GTK_TABLE (table8), label_emote_set, 0, 1, 1, 2,
@@ -537,13 +536,13 @@ create_win_prefs (void)
                     (GtkAttachOptions) (0),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-  label58 = gtk_label_new (_("<b>Emotikony</b>"));
+  label58 = gtk_label_new ("<b>Emotikony</b>");
   gtk_widget_set_name (label58, "label58");
   gtk_widget_show (label58);
   gtk_frame_set_label_widget (GTK_FRAME (frame10), label58);
   gtk_label_set_use_markup (GTK_LABEL (label58), TRUE);
 
-  label43 = gtk_label_new (_("Okno rozmowy"));
+  label43 = gtk_label_new ("Okno rozmowy");
   gtk_widget_set_name (label43, "label43");
   gtk_widget_show (label43);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 2), label43);
@@ -574,14 +573,14 @@ create_win_prefs (void)
   gtk_table_set_row_spacings (GTK_TABLE (table6), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table6), 6);
 
-  checkbutton_autoaway = gtk_check_button_new_with_mnemonic (_("Automatycznie przechod\305\272 do stanu Zaraz wracam"));
+  checkbutton_autoaway = gtk_check_button_new_with_mnemonic ("Automatycznie przechod\305\272 do stanu Zaraz wracam");
   gtk_widget_set_name (checkbutton_autoaway, "checkbutton_autoaway");
   gtk_widget_show (checkbutton_autoaway);
   gtk_table_attach (GTK_TABLE (table6), checkbutton_autoaway, 0, 3, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  label_aa2 = gtk_label_new (_("Przej\305\233cie do stanu <i>Wr\303\263c\304\231 p\303\263\305\272niej</i> po"));
+  label_aa2 = gtk_label_new ("Przej\305\233cie do stanu <i>Wr\303\263c\304\231 p\303\263\305\272niej</i> po");
   gtk_widget_set_name (label_aa2, "label_aa2");
   gtk_widget_show (label_aa2);
   gtk_table_attach (GTK_TABLE (table6), label_aa2, 0, 1, 2, 3,
@@ -606,7 +605,7 @@ create_win_prefs (void)
                     (GtkAttachOptions) (0),
                     (GtkAttachOptions) (0), 0, 0);
 
-  label_aa11 = gtk_label_new (_("minutach braku aktywno\305\233ci"));
+  label_aa11 = gtk_label_new ("minutach braku aktywno\305\233ci");
   gtk_widget_set_name (label_aa11, "label_aa11");
   gtk_widget_show (label_aa11);
   gtk_table_attach (GTK_TABLE (table6), label_aa11, 2, 3, 1, 2,
@@ -614,7 +613,7 @@ create_win_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label_aa11), 0, 0.5);
 
-  label_aa1 = gtk_label_new (_("Przej\305\233cie do stanu <i>Zaraz wracam</i> po"));
+  label_aa1 = gtk_label_new ("Przej\305\233cie do stanu <i>Zaraz wracam</i> po");
   gtk_widget_set_name (label_aa1, "label_aa1");
   gtk_widget_show (label_aa1);
   gtk_table_attach (GTK_TABLE (table6), label_aa1, 0, 1, 1, 2,
@@ -623,7 +622,7 @@ create_win_prefs (void)
   gtk_label_set_use_markup (GTK_LABEL (label_aa1), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label_aa1), 0, 0.5);
 
-  label_aa22 = gtk_label_new (_("minutach od <i>Zaraz wracam</i>"));
+  label_aa22 = gtk_label_new ("minutach od <i>Zaraz wracam</i>");
   gtk_widget_set_name (label_aa22, "label_aa22");
   gtk_widget_show (label_aa22);
   gtk_table_attach (GTK_TABLE (table6), label_aa22, 2, 3, 2, 3,
@@ -632,14 +631,14 @@ create_win_prefs (void)
   gtk_label_set_use_markup (GTK_LABEL (label_aa22), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label_aa22), 0, 0.5);
 
-  checkbutton_autoaway_desc = gtk_check_button_new_with_mnemonic (_("Dodawaj czas zmiany stanu do opisu"));
+  checkbutton_autoaway_desc = gtk_check_button_new_with_mnemonic ("Dodawaj czas zmiany stanu do opisu");
   gtk_widget_set_name (checkbutton_autoaway_desc, "checkbutton_autoaway_desc");
   gtk_widget_show (checkbutton_autoaway_desc);
   gtk_table_attach (GTK_TABLE (table6), checkbutton_autoaway_desc, 0, 3, 3, 4,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  label50 = gtk_label_new (_("<b>Automatyczna zmiana stanu</b>"));
+  label50 = gtk_label_new ("<b>Automatyczna zmiana stanu</b>");
   gtk_widget_set_name (label50, "label50");
   gtk_widget_show (label50);
   gtk_frame_set_label_widget (GTK_FRAME (frame8), label50);
@@ -665,7 +664,7 @@ create_win_prefs (void)
   gtk_table_set_row_spacings (GTK_TABLE (table9), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table9), 6);
 
-  radiobutton_start_status = gtk_radio_button_new_with_mnemonic (NULL, _("Po uruchomieniu ustaw stan na:"));
+  radiobutton_start_status = gtk_radio_button_new_with_mnemonic (NULL, "Po uruchomieniu ustaw stan na:");
   gtk_widget_set_name (radiobutton_start_status, "radiobutton_start_status");
   gtk_widget_show (radiobutton_start_status);
   gtk_table_attach (GTK_TABLE (table9), radiobutton_start_status, 0, 1, 3, 4,
@@ -681,15 +680,15 @@ create_win_prefs (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_widget_set_sensitive (comboboxentry_start_status, FALSE);
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), _("Dost\304\231pny"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), _("Porozmawiajmy"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), _("Jestem zaj\304\231ty"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), _("Zaraz wracam"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), _("Wr\303\263c\304\231 p\303\263\305\272niej"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), _("Niewidoczny"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), _("Niedost\304\231pny"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), "Dost\304\231pny");
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), "Porozmawiajmy");
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), "Jestem zaj\304\231ty");
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), "Zaraz wracam");
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), "Wr\303\263c\304\231 p\303\263\305\272niej");
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), "Niewidoczny");
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry_start_status), "Niedost\304\231pny");
 
-  radiobutton_status_save = gtk_radio_button_new_with_mnemonic (NULL, _("Przywracaj stan ustawiony w momencie ostatniego wyj\305\233cia z programu"));
+  radiobutton_status_save = gtk_radio_button_new_with_mnemonic (NULL, "Przywracaj stan ustawiony w momencie ostatniego wyj\305\233cia z programu");
   gtk_widget_set_name (radiobutton_status_save, "radiobutton_status_save");
   gtk_widget_show (radiobutton_status_save);
   gtk_table_attach (GTK_TABLE (table9), radiobutton_status_save, 0, 2, 2, 3,
@@ -698,27 +697,27 @@ create_win_prefs (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radiobutton_status_save), radiobutton_start_status_group);
   radiobutton_start_status_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radiobutton_status_save));
 
-  checkbutton_desc_save = gtk_check_button_new_with_mnemonic (_("Przywracaj opis ustawiony w momencie ostatniego wyj\305\233cia z programu"));
+  checkbutton_desc_save = gtk_check_button_new_with_mnemonic ("Przywracaj opis ustawiony w momencie ostatniego wyj\305\233cia z programu");
   gtk_widget_set_name (checkbutton_desc_save, "checkbutton_desc_save");
   gtk_widget_show (checkbutton_desc_save);
   gtk_table_attach (GTK_TABLE (table9), checkbutton_desc_save, 0, 2, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  checkbutton_save_desc_at_exit = gtk_check_button_new_with_mnemonic (_("Zostaw aktualny stan opisowy przy przej\305\233ciu w stan Niedost\304\231pny"));
+  checkbutton_save_desc_at_exit = gtk_check_button_new_with_mnemonic ("Zostaw aktualny stan opisowy przy przej\305\233ciu w stan Niedost\304\231pny");
   gtk_widget_set_name (checkbutton_save_desc_at_exit, "checkbutton_save_desc_at_exit");
   gtk_widget_show (checkbutton_save_desc_at_exit);
   gtk_table_attach (GTK_TABLE (table9), checkbutton_save_desc_at_exit, 0, 2, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  label57 = gtk_label_new (_("<b>Zapisywanie stanu</b>"));
+  label57 = gtk_label_new ("<b>Zapisywanie stanu</b>");
   gtk_widget_set_name (label57, "label57");
   gtk_widget_show (label57);
   gtk_frame_set_label_widget (GTK_FRAME (frame9), label57);
   gtk_label_set_use_markup (GTK_LABEL (label57), TRUE);
 
-  label44 = gtk_label_new (_("Stan"));
+  label44 = gtk_label_new ("Stan");
   gtk_widget_set_name (label44, "label44");
   gtk_widget_show (label44);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 3), label44);
@@ -734,7 +733,7 @@ create_win_prefs (void)
   gtk_widget_show (hbox188);
   gtk_box_pack_start (GTK_BOX (vbox10), hbox188, FALSE, TRUE, 0);
 
-  label60 = gtk_label_new (_("Polecenie uruchamiaj\304\205ce przegl\304\205dark\304\231 WWW:"));
+  label60 = gtk_label_new ("Polecenie uruchamiaj\304\205ce przegl\304\205dark\304\231 WWW:");
   gtk_widget_set_name (label60, "label60");
   gtk_widget_show (label60);
   gtk_box_pack_start (GTK_BOX (hbox188), label60, FALSE, FALSE, 0);
@@ -743,15 +742,15 @@ create_win_prefs (void)
   gtk_widget_set_name (entry_browser, "entry_browser");
   gtk_widget_show (entry_browser);
   gtk_box_pack_start (GTK_BOX (hbox188), entry_browser, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip (tooltips, entry_browser, _("Wpisz polecenie przegl\304\205dark\304\231 za pomoc\304\205 kt\303\263rej chcesz otwiera\304\207 linki (np. 'mozilla %s'). Adres zostanie podstawiony w miejsce %s"), NULL);
+  gtk_tooltips_set_tip (tooltips, entry_browser, "Wpisz polecenie przegl\304\205dark\304\231 za pomoc\304\205 kt\303\263rej chcesz otwiera\304\207 linki (np. 'mozilla %s'). Adres zostanie podstawiony w miejsce %s", NULL);
 
-  label61 = gtk_label_new (_("<span size=\"x-large\"><b>... opcje ...</b></span>"));
+  label61 = gtk_label_new ("<span size=\"x-large\"><b>... opcje ...</b></span>");
   gtk_widget_set_name (label61, "label61");
   gtk_widget_show (label61);
   gtk_box_pack_start (GTK_BOX (vbox10), label61, TRUE, FALSE, 0);
   gtk_label_set_use_markup (GTK_LABEL (label61), TRUE);
 
-  label45 = gtk_label_new (_("Pozosta\305\202e"));
+  label45 = gtk_label_new ("Pozosta\305\202e");
   gtk_widget_set_name (label45, "label45");
   gtk_widget_show (label45);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 4), label45);
@@ -905,7 +904,7 @@ create_win_desc (void)
   win_desc = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (win_desc, "win_desc");
   gtk_container_set_border_width (GTK_CONTAINER (win_desc), 12);
-  gtk_window_set_title (GTK_WINDOW (win_desc), _("Stan opisowy"));
+  gtk_window_set_title (GTK_WINDOW (win_desc), "Stan opisowy");
   gtk_window_set_position (GTK_WINDOW (win_desc), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (win_desc), FALSE);
   win_desc_icon_pixbuf = create_pixbuf ("glen/status-avail.png");
@@ -949,7 +948,7 @@ create_win_desc (void)
   gtk_container_set_border_width (GTK_CONTAINER (table_stan), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table_stan), 24);
 
-  radio_chatty = gtk_radio_button_new_with_mnemonic (NULL, _("Porozmawiajmy"));
+  radio_chatty = gtk_radio_button_new_with_mnemonic (NULL, "Porozmawiajmy");
   gtk_widget_set_name (radio_chatty, "radio_chatty");
   gtk_widget_show (radio_chatty);
   gtk_table_attach (GTK_TABLE (table_stan), radio_chatty, 0, 1, 1, 2,
@@ -959,7 +958,7 @@ create_win_desc (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radio_chatty), radio_chatty_group);
   radio_chatty_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_chatty));
 
-  radio_away = gtk_radio_button_new_with_mnemonic (NULL, _("Zaraz wracam"));
+  radio_away = gtk_radio_button_new_with_mnemonic (NULL, "Zaraz wracam");
   gtk_widget_set_name (radio_away, "radio_away");
   gtk_widget_show (radio_away);
   gtk_table_attach (GTK_TABLE (table_stan), radio_away, 0, 1, 2, 3,
@@ -969,7 +968,7 @@ create_win_desc (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radio_away), radio_chatty_group);
   radio_chatty_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_away));
 
-  radio_bbl = gtk_radio_button_new_with_mnemonic (NULL, _("Wr\303\263c\304\231 p\303\263\305\272niej"));
+  radio_bbl = gtk_radio_button_new_with_mnemonic (NULL, "Wr\303\263c\304\231 p\303\263\305\272niej");
   gtk_widget_set_name (radio_bbl, "radio_bbl");
   gtk_widget_show (radio_bbl);
   gtk_table_attach (GTK_TABLE (table_stan), radio_bbl, 0, 1, 3, 4,
@@ -979,7 +978,7 @@ create_win_desc (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radio_bbl), radio_chatty_group);
   radio_chatty_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_bbl));
 
-  radio_avail = gtk_radio_button_new_with_mnemonic (NULL, _("Dost\304\231pny"));
+  radio_avail = gtk_radio_button_new_with_mnemonic (NULL, "Dost\304\231pny");
   gtk_widget_set_name (radio_avail, "radio_avail");
   gtk_widget_show (radio_avail);
   gtk_table_attach (GTK_TABLE (table_stan), radio_avail, 0, 1, 0, 1,
@@ -989,7 +988,7 @@ create_win_desc (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radio_avail), radio_chatty_group);
   radio_chatty_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_avail));
 
-  radio_dnd = gtk_radio_button_new_with_mnemonic (NULL, _("Jestem zaj\304\231ty"));
+  radio_dnd = gtk_radio_button_new_with_mnemonic (NULL, "Jestem zaj\304\231ty");
   gtk_widget_set_name (radio_dnd, "radio_dnd");
   gtk_widget_show (radio_dnd);
   gtk_table_attach (GTK_TABLE (table_stan), radio_dnd, 1, 2, 0, 1,
@@ -999,7 +998,7 @@ create_win_desc (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radio_dnd), radio_chatty_group);
   radio_chatty_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_dnd));
 
-  radio_invisible = gtk_radio_button_new_with_mnemonic (NULL, _("Niewidoczny"));
+  radio_invisible = gtk_radio_button_new_with_mnemonic (NULL, "Niewidoczny");
   gtk_widget_set_name (radio_invisible, "radio_invisible");
   gtk_widget_show (radio_invisible);
   gtk_table_attach (GTK_TABLE (table_stan), radio_invisible, 1, 2, 1, 2,
@@ -1009,7 +1008,7 @@ create_win_desc (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radio_invisible), radio_chatty_group);
   radio_chatty_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_invisible));
 
-  radio_unavail = gtk_radio_button_new_with_mnemonic (NULL, _("Niedost\304\231pny"));
+  radio_unavail = gtk_radio_button_new_with_mnemonic (NULL, "Niedost\304\231pny");
   gtk_widget_set_name (radio_unavail, "radio_unavail");
   gtk_widget_show (radio_unavail);
   gtk_table_attach (GTK_TABLE (table_stan), radio_unavail, 1, 2, 2, 3,
@@ -1019,7 +1018,7 @@ create_win_desc (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radio_unavail), radio_chatty_group);
   radio_chatty_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_unavail));
 
-  label3 = gtk_label_new (_("<b>Rodzaj stanu</b>"));
+  label3 = gtk_label_new ("<b>Rodzaj stanu</b>");
   gtk_widget_set_name (label3, "label3");
   gtk_widget_show (label3);
   gtk_frame_set_label_widget (GTK_FRAME (frame_stan), label3);
@@ -1047,7 +1046,7 @@ create_win_desc (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-  label31 = gtk_label_new (_("Opis:"));
+  label31 = gtk_label_new ("Opis:");
   gtk_widget_set_name (label31, "label31");
   gtk_widget_show (label31);
   gtk_table_attach (GTK_TABLE (table4), label31, 1, 2, 0, 1,
@@ -1063,7 +1062,7 @@ create_win_desc (void)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_entry_set_activates_default (GTK_ENTRY (entry_desc), TRUE);
 
-  label32 = gtk_label_new (_("Nazwa na li\305\233cie:"));
+  label32 = gtk_label_new ("Nazwa na li\305\233cie:");
   gtk_widget_set_name (label32, "label32");
   gtk_widget_show (label32);
   gtk_table_attach (GTK_TABLE (table4), label32, 0, 2, 1, 2,
@@ -1082,7 +1081,7 @@ create_win_desc (void)
   gtk_box_pack_start (GTK_BOX (hbox_top), vbox_top_right, FALSE, TRUE, 0);
   gtk_widget_set_size_request (vbox_top_right, 142, -1);
 
-  label4 = gtk_label_new (_("Lista stan\303\263w"));
+  label4 = gtk_label_new ("Lista stan\303\263w");
   gtk_widget_set_name (label4, "label4");
   gtk_widget_show (label4);
   gtk_box_pack_start (GTK_BOX (vbox_top_right), label4, FALSE, FALSE, 0);
@@ -1116,7 +1115,7 @@ create_win_desc (void)
   gtk_widget_show (btn_dodaj);
   gtk_box_pack_start (GTK_BOX (hbox_buttons), btn_dodaj, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (btn_dodaj, FALSE);
-  gtk_tooltips_set_tip (tooltips, btn_dodaj, _("Wprowad\305\272 nazw\304\231 stanu i kliknij aby doda\304\207 go do listy"), NULL);
+  gtk_tooltips_set_tip (tooltips, btn_dodaj, "Wprowad\305\272 nazw\304\231 stanu i kliknij aby doda\304\207 go do listy", NULL);
 
   alignment7 = gtk_alignment_new (0.5, 0.5, 0, 0);
   gtk_widget_set_name (alignment7, "alignment7");
@@ -1133,7 +1132,7 @@ create_win_desc (void)
   gtk_widget_show (image14);
   gtk_box_pack_start (GTK_BOX (hbox15), image14, FALSE, FALSE, 0);
 
-  label11 = gtk_label_new_with_mnemonic (_("Dodaj"));
+  label11 = gtk_label_new_with_mnemonic ("Dodaj");
   gtk_widget_set_name (label11, "label11");
   gtk_widget_show (label11);
   gtk_box_pack_start (GTK_BOX (hbox15), label11, FALSE, FALSE, 0);
@@ -1143,7 +1142,7 @@ create_win_desc (void)
   gtk_widget_show (btn_zmien);
   gtk_box_pack_start (GTK_BOX (hbox_buttons), btn_zmien, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (btn_zmien, FALSE);
-  gtk_tooltips_set_tip (tooltips, btn_zmien, _("Wprowad\305\272 nazw\304\231 istniej\304\205cego stanu i kliknij, aby zmieni\304\207 odpowiadaj\304\205cy mu opis"), NULL);
+  gtk_tooltips_set_tip (tooltips, btn_zmien, "Wprowad\305\272 nazw\304\231 istniej\304\205cego stanu i kliknij, aby zmieni\304\207 odpowiadaj\304\205cy mu opis", NULL);
 
   alignment6 = gtk_alignment_new (0.5, 0.5, 0, 0);
   gtk_widget_set_name (alignment6, "alignment6");
@@ -1160,7 +1159,7 @@ create_win_desc (void)
   gtk_widget_show (image13);
   gtk_box_pack_start (GTK_BOX (hbox14), image13, FALSE, FALSE, 0);
 
-  label10 = gtk_label_new_with_mnemonic (_("Zmie\305\204"));
+  label10 = gtk_label_new_with_mnemonic ("Zmie\305\204");
   gtk_widget_set_name (label10, "label10");
   gtk_widget_show (label10);
   gtk_box_pack_start (GTK_BOX (hbox14), label10, FALSE, FALSE, 0);
@@ -1170,7 +1169,7 @@ create_win_desc (void)
   gtk_widget_show (btn_usun);
   gtk_box_pack_start (GTK_BOX (hbox_buttons), btn_usun, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (btn_usun, FALSE);
-  gtk_tooltips_set_tip (tooltips, btn_usun, _("Usu\305\204 zaznaczony stan"), NULL);
+  gtk_tooltips_set_tip (tooltips, btn_usun, "Usu\305\204 zaznaczony stan", NULL);
 
   alignment5 = gtk_alignment_new (0.5, 0.5, 0, 0);
   gtk_widget_set_name (alignment5, "alignment5");
@@ -1187,7 +1186,7 @@ create_win_desc (void)
   gtk_widget_show (image12);
   gtk_box_pack_start (GTK_BOX (hbox13), image12, FALSE, FALSE, 0);
 
-  label9 = gtk_label_new_with_mnemonic (_("Usu\305\204"));
+  label9 = gtk_label_new_with_mnemonic ("Usu\305\204");
   gtk_widget_set_name (label9, "label9");
   gtk_widget_show (label9);
   gtk_box_pack_start (GTK_BOX (hbox13), label9, FALSE, FALSE, 0);
@@ -1201,7 +1200,7 @@ create_win_desc (void)
   gtk_widget_set_name (btn_anuluj, "btn_anuluj");
   gtk_widget_show (btn_anuluj);
   gtk_box_pack_start (GTK_BOX (hbox_buttons), btn_anuluj, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, btn_anuluj, _("Anuluj zmian\304\231 stanu"), NULL);
+  gtk_tooltips_set_tip (tooltips, btn_anuluj, "Anuluj zmian\304\231 stanu", NULL);
 
   alignment4 = gtk_alignment_new (0.5, 0.5, 0, 0);
   gtk_widget_set_name (alignment4, "alignment4");
@@ -1218,7 +1217,7 @@ create_win_desc (void)
   gtk_widget_show (image11);
   gtk_box_pack_start (GTK_BOX (hbox12), image11, FALSE, FALSE, 0);
 
-  label8 = gtk_label_new_with_mnemonic (_("Anuluj"));
+  label8 = gtk_label_new_with_mnemonic ("Anuluj");
   gtk_widget_set_name (label8, "label8");
   gtk_widget_show (label8);
   gtk_box_pack_start (GTK_BOX (hbox12), label8, FALSE, FALSE, 0);
@@ -1228,7 +1227,7 @@ create_win_desc (void)
   gtk_widget_show (btn_ustaw);
   gtk_box_pack_start (GTK_BOX (hbox_buttons), btn_ustaw, FALSE, FALSE, 0);
   GTK_WIDGET_SET_FLAGS (btn_ustaw, GTK_CAN_DEFAULT);
-  gtk_tooltips_set_tip (tooltips, btn_ustaw, _("Ustaw wybrany stan"), NULL);
+  gtk_tooltips_set_tip (tooltips, btn_ustaw, "Ustaw wybrany stan", NULL);
 
   alignment3 = gtk_alignment_new (0.5, 0.5, 0, 0);
   gtk_widget_set_name (alignment3, "alignment3");
@@ -1245,7 +1244,7 @@ create_win_desc (void)
   gtk_widget_show (image10);
   gtk_box_pack_start (GTK_BOX (hbox11), image10, FALSE, FALSE, 0);
 
-  label7 = gtk_label_new_with_mnemonic (_("Ustaw stan"));
+  label7 = gtk_label_new_with_mnemonic ("Ustaw stan");
   gtk_widget_set_name (label7, "label7");
   gtk_widget_show (label7);
   gtk_box_pack_start (GTK_BOX (hbox11), label7, FALSE, FALSE, 0);
@@ -1335,7 +1334,7 @@ create_win_conf_wizard (void)
 
   win_conf_wizard = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (win_conf_wizard, "win_conf_wizard");
-  gtk_window_set_title (GTK_WINDOW (win_conf_wizard), _("Druid konfiguracji glena"));
+  gtk_window_set_title (GTK_WINDOW (win_conf_wizard), "Druid konfiguracji glena");
 
   druid1 = gnome_druid_new ();
   gtk_widget_set_name (druid1, "druid1");
@@ -1348,8 +1347,8 @@ create_win_conf_wizard (void)
   gtk_widget_show (druidpagestart1);
   gnome_druid_append_page (GNOME_DRUID (druid1),
                            GNOME_DRUID_PAGE (druidpagestart1));
-  gnome_druid_page_edge_set_title (GNOME_DRUID_PAGE_EDGE (druidpagestart1), _("Witaj w glenie"));
-  gnome_druid_page_edge_set_text (GNOME_DRUID_PAGE_EDGE (druidpagestart1), _("Wygl\304\205da na to, \305\274e uruchomi\305\202e\305\233 glena po raz pierwszy. Ten druid pomo\305\274e Ci ustawi\304\207 podstawowe parametry programu."));
+  gnome_druid_page_edge_set_title (GNOME_DRUID_PAGE_EDGE (druidpagestart1), "Witaj w glenie");
+  gnome_druid_page_edge_set_text (GNOME_DRUID_PAGE_EDGE (druidpagestart1), "Wygl\304\205da na to, \305\274e uruchomi\305\202e\305\233 glena po raz pierwszy. Ten druid pomo\305\274e Ci ustawi\304\207 podstawowe parametry programu.");
   tmp_pixbuf = create_pixbuf ("glen/status-avail.png");
   if (tmp_pixbuf)
     {
@@ -1363,7 +1362,7 @@ create_win_conf_wizard (void)
   gtk_widget_show_all (page_konto);
   gnome_druid_append_page (GNOME_DRUID (druid1),
                            GNOME_DRUID_PAGE (page_konto));
-  gnome_druid_page_standard_set_title (GNOME_DRUID_PAGE_STANDARD (page_konto), _("Dane konta Tlen.pl"));
+  gnome_druid_page_standard_set_title (GNOME_DRUID_PAGE_STANDARD (page_konto), "Dane konta Tlen.pl");
   tmp_pixbuf = create_pixbuf ("glen/status-avail.png");
   if (tmp_pixbuf)
     {
@@ -1382,7 +1381,7 @@ create_win_conf_wizard (void)
   gtk_widget_show (vbox3);
   gtk_box_pack_start (GTK_BOX (druid_vbox1), vbox3, TRUE, TRUE, 0);
 
-  label12 = gtk_label_new (_("Musisz mie\304\207 istniej\304\205ce konto w sieci Tlen.pl aby rozpocz\304\205\304\207 prac\304\231. Wpisz dane konta w poni\305\274szych polach."));
+  label12 = gtk_label_new ("Musisz mie\304\207 istniej\304\205ce konto w sieci Tlen.pl aby rozpocz\304\205\304\207 prac\304\231. Wpisz dane konta w poni\305\274szych polach.");
   gtk_widget_set_name (label12, "label12");
   gtk_widget_show (label12);
   gtk_box_pack_start (GTK_BOX (vbox3), label12, FALSE, FALSE, 0);
@@ -1396,7 +1395,7 @@ create_win_conf_wizard (void)
   gtk_widget_show (hbox16);
   gtk_box_pack_start (GTK_BOX (vbox3), hbox16, TRUE, TRUE, 0);
 
-  label13 = gtk_label_new (_("Identyfikator: "));
+  label13 = gtk_label_new ("Identyfikator: ");
   gtk_widget_set_name (label13, "label13");
   gtk_widget_show (label13);
   gtk_box_pack_start (GTK_BOX (hbox16), label13, FALSE, TRUE, 0);
@@ -1407,14 +1406,14 @@ create_win_conf_wizard (void)
   gtk_widget_show (entry_login);
   gtk_box_pack_start (GTK_BOX (hbox16), entry_login, FALSE, TRUE, 0);
   gtk_widget_set_size_request (entry_login, 200, -1);
-  gtk_tooltips_set_tip (tooltips, entry_login, _("Tw\303\263j login w sieci Tlen.pl, w formie nazwa@tlen.pl, nazwa@o2.pl lub po prostu nazwa"), NULL);
+  gtk_tooltips_set_tip (tooltips, entry_login, "Tw\303\263j login w sieci Tlen.pl, w formie nazwa@tlen.pl, nazwa@o2.pl lub po prostu nazwa", NULL);
 
   hbox17 = gtk_hbox_new (FALSE, 10);
   gtk_widget_set_name (hbox17, "hbox17");
   gtk_widget_show (hbox17);
   gtk_box_pack_start (GTK_BOX (vbox3), hbox17, TRUE, TRUE, 0);
 
-  label15 = gtk_label_new (_("Has\305\202o: "));
+  label15 = gtk_label_new ("Has\305\202o: ");
   gtk_widget_set_name (label15, "label15");
   gtk_widget_show (label15);
   gtk_box_pack_start (GTK_BOX (hbox17), label15, FALSE, TRUE, 0);
@@ -1425,7 +1424,7 @@ create_win_conf_wizard (void)
   gtk_widget_show (entry_pass);
   gtk_box_pack_start (GTK_BOX (hbox17), entry_pass, FALSE, TRUE, 0);
   gtk_widget_set_size_request (entry_pass, 200, -1);
-  gtk_tooltips_set_tip (tooltips, entry_pass, _("Twoje has\305\202o w sieci Tlen.pl"), NULL);
+  gtk_tooltips_set_tip (tooltips, entry_pass, "Twoje has\305\202o w sieci Tlen.pl", NULL);
   gtk_entry_set_visibility (GTK_ENTRY (entry_pass), FALSE);
 
   druidpagefinish1 = gnome_druid_page_edge_new (GNOME_EDGE_FINISH);
@@ -1433,8 +1432,8 @@ create_win_conf_wizard (void)
   gtk_widget_show (druidpagefinish1);
   gnome_druid_append_page (GNOME_DRUID (druid1),
                            GNOME_DRUID_PAGE (druidpagefinish1));
-  gnome_druid_page_edge_set_title (GNOME_DRUID_PAGE_EDGE (druidpagefinish1), _("Konfiguracja zako\305\204czona"));
-  gnome_druid_page_edge_set_text (GNOME_DRUID_PAGE_EDGE (druidpagefinish1), _("Podstawowa konfiguracja zako\305\204czona. Wi\304\231cej opcji znajdziesz w menu dost\304\231pnym z g\305\202\303\263wnego okna programu. Przyjemnych pogaduszek :)"));
+  gnome_druid_page_edge_set_title (GNOME_DRUID_PAGE_EDGE (druidpagefinish1), "Konfiguracja zako\305\204czona");
+  gnome_druid_page_edge_set_text (GNOME_DRUID_PAGE_EDGE (druidpagefinish1), "Podstawowa konfiguracja zako\305\204czona. Wi\304\231cej opcji znajdziesz w menu dost\304\231pnym z g\305\202\303\263wnego okna programu. Przyjemnych pogaduszek :)");
   tmp_pixbuf = create_pixbuf ("glen/status-avail.png");
   if (tmp_pixbuf)
     {
@@ -1488,7 +1487,7 @@ create_win_msg_send (void)
   win_msg_send = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (win_msg_send, "win_msg_send");
   gtk_container_set_border_width (GTK_CONTAINER (win_msg_send), 12);
-  gtk_window_set_title (GTK_WINDOW (win_msg_send), _("Nowa wiadomo\305\233\304\207"));
+  gtk_window_set_title (GTK_WINDOW (win_msg_send), "Nowa wiadomo\305\233\304\207");
   gtk_window_set_resizable (GTK_WINDOW (win_msg_send), FALSE);
   win_msg_send_icon_pixbuf = create_pixbuf ("glen/status-avail.png");
   if (win_msg_send_icon_pixbuf)
@@ -1502,7 +1501,7 @@ create_win_msg_send (void)
   gtk_widget_show (vbox4);
   gtk_container_add (GTK_CONTAINER (win_msg_send), vbox4);
 
-  label_to = gtk_label_new (_("label16"));
+  label_to = gtk_label_new ("label16");
   gtk_widget_set_name (label_to, "label_to");
   gtk_widget_show (label_to);
   gtk_box_pack_start (GTK_BOX (vbox4), label_to, FALSE, FALSE, 0);
@@ -1526,7 +1525,7 @@ create_win_msg_send (void)
   gtk_widget_set_name (text, "text");
   gtk_widget_show (text);
   gtk_container_add (GTK_CONTAINER (scrolledwindow2), text);
-  gtk_tooltips_set_tip (tooltips, text, _("Wprowad\305\272 tekst wiadomo\305\233ci do wys\305\202ania"), NULL);
+  gtk_tooltips_set_tip (tooltips, text, "Wprowad\305\272 tekst wiadomo\305\233ci do wys\305\202ania", NULL);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text), GTK_WRAP_WORD);
 
   hbox184 = gtk_hbox_new (FALSE, 6);
@@ -1548,7 +1547,7 @@ create_win_msg_send (void)
   gtk_widget_set_name (button_send, "button_send");
   gtk_widget_show (button_send);
   gtk_box_pack_start (GTK_BOX (hbox184), button_send, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, button_send, _("Wysy\305\202a wiadomo\305\233\304\207"), NULL);
+  gtk_tooltips_set_tip (tooltips, button_send, "Wysy\305\202a wiadomo\305\233\304\207", NULL);
 
   alignment12 = gtk_alignment_new (0.5, 0.5, 0, 0);
   gtk_widget_set_name (alignment12, "alignment12");
@@ -1565,7 +1564,7 @@ create_win_msg_send (void)
   gtk_widget_show (image17);
   gtk_box_pack_start (GTK_BOX (hbox185), image17, FALSE, FALSE, 0);
 
-  label30 = gtk_label_new_with_mnemonic (_("_Wy\305\233lij"));
+  label30 = gtk_label_new_with_mnemonic ("_Wy\305\233lij");
   gtk_widget_set_name (label30, "label30");
   gtk_widget_show (label30);
   gtk_box_pack_start (GTK_BOX (hbox185), label30, FALSE, FALSE, 0);
@@ -1620,7 +1619,7 @@ create_win_msg_recv (void)
   win_msg_recv = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (win_msg_recv, "win_msg_recv");
   gtk_container_set_border_width (GTK_CONTAINER (win_msg_recv), 12);
-  gtk_window_set_title (GTK_WINDOW (win_msg_recv), _("Otrzymano wiadomo\305\233\304\207"));
+  gtk_window_set_title (GTK_WINDOW (win_msg_recv), "Otrzymano wiadomo\305\233\304\207");
   gtk_window_set_resizable (GTK_WINDOW (win_msg_recv), FALSE);
   win_msg_recv_icon_pixbuf = create_pixbuf ("glen/status-avail.png");
   if (win_msg_recv_icon_pixbuf)
@@ -1641,7 +1640,7 @@ create_win_msg_recv (void)
   gtk_table_set_row_spacings (GTK_TABLE (table1), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table1), 6);
 
-  label21 = gtk_label_new (_("Otrzymano: "));
+  label21 = gtk_label_new ("Otrzymano: ");
   gtk_widget_set_name (label21, "label21");
   gtk_widget_show (label21);
   gtk_table_attach (GTK_TABLE (table1), label21, 0, 1, 1, 2,
@@ -1649,7 +1648,7 @@ create_win_msg_recv (void)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label21), 0, 0.5);
 
-  label20 = gtk_label_new (_("Od: "));
+  label20 = gtk_label_new ("Od: ");
   gtk_widget_set_name (label20, "label20");
   gtk_widget_show (label20);
   gtk_table_attach (GTK_TABLE (table1), label20, 0, 1, 0, 1,
@@ -1657,7 +1656,7 @@ create_win_msg_recv (void)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label20), 0, 0.5);
 
-  label_time = gtk_label_new (_("<b>time</b>"));
+  label_time = gtk_label_new ("<b>time</b>");
   gtk_widget_set_name (label_time, "label_time");
   gtk_widget_show (label_time);
   gtk_table_attach (GTK_TABLE (table1), label_time, 1, 2, 1, 2,
@@ -1673,7 +1672,7 @@ create_win_msg_recv (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (button_next, FALSE);
-  gtk_tooltips_set_tip (tooltips, button_next, _("Przejd\305\272 do nast\304\231pnej wiadomo\305\233ci"), NULL);
+  gtk_tooltips_set_tip (tooltips, button_next, "Przejd\305\272 do nast\304\231pnej wiadomo\305\233ci", NULL);
   gtk_button_set_focus_on_click (GTK_BUTTON (button_next), FALSE);
 
   button_prev = gtk_button_new_from_stock ("gtk-media-previous");
@@ -1683,7 +1682,7 @@ create_win_msg_recv (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_sensitive (button_prev, FALSE);
-  gtk_tooltips_set_tip (tooltips, button_prev, _("Przejd\305\272 do poprzedniej wiadomo\305\233ci"), NULL);
+  gtk_tooltips_set_tip (tooltips, button_prev, "Przejd\305\272 do poprzedniej wiadomo\305\233ci", NULL);
 
   button_reply = gtk_button_new ();
   gtk_widget_set_name (button_reply, "button_reply");
@@ -1691,7 +1690,7 @@ create_win_msg_recv (void)
   gtk_table_attach (GTK_TABLE (table1), button_reply, 3, 4, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_tooltips_set_tip (tooltips, button_reply, _("Odpowiedz nadawcy"), NULL);
+  gtk_tooltips_set_tip (tooltips, button_reply, "Odpowiedz nadawcy", NULL);
   gtk_button_set_focus_on_click (GTK_BUTTON (button_reply), FALSE);
 
   alignment10 = gtk_alignment_new (0.5, 0.5, 0, 0);
@@ -1709,12 +1708,12 @@ create_win_msg_recv (void)
   gtk_widget_show (image16);
   gtk_box_pack_start (GTK_BOX (hbox19), image16, FALSE, FALSE, 0);
 
-  label24 = gtk_label_new_with_mnemonic (_("_Odpisz"));
+  label24 = gtk_label_new_with_mnemonic ("_Odpisz");
   gtk_widget_set_name (label24, "label24");
   gtk_widget_show (label24);
   gtk_box_pack_start (GTK_BOX (hbox19), label24, FALSE, FALSE, 0);
 
-  label_from = gtk_label_new (_("<b>from</b>"));
+  label_from = gtk_label_new ("<b>from</b>");
   gtk_widget_set_name (label_from, "label_from");
   gtk_widget_show (label_from);
   gtk_table_attach (GTK_TABLE (table1), label_from, 1, 2, 0, 1,
@@ -1741,7 +1740,7 @@ create_win_msg_recv (void)
   gtk_widget_show (hbox22);
   gtk_box_pack_start (GTK_BOX (vbox5), hbox22, FALSE, TRUE, 0);
 
-  label_count = gtk_label_new (_("<b>Nieprzeczytanych: 0</b>"));
+  label_count = gtk_label_new ("<b>Nieprzeczytanych: 0</b>");
   gtk_widget_set_name (label_count, "label_count");
   gtk_widget_show (label_count);
   gtk_box_pack_start (GTK_BOX (hbox22), label_count, TRUE, TRUE, 0);
@@ -1752,7 +1751,7 @@ create_win_msg_recv (void)
   gtk_widget_set_name (button_close, "button_close");
   gtk_widget_show (button_close);
   gtk_box_pack_start (GTK_BOX (hbox22), button_close, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, button_close, _("Zamknij okno. Nieprzeczytane wiadomo\305\233ci mo\305\274esz odnale\305\272\304\207 w archiwum."), NULL);
+  gtk_tooltips_set_tip (tooltips, button_close, "Zamknij okno. Nieprzeczytane wiadomo\305\233ci mo\305\274esz odnale\305\272\304\207 w archiwum.", NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (win_msg_recv, win_msg_recv, "win_msg_recv");
@@ -1818,7 +1817,7 @@ create_win_edit (void)
   win_edit = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_name (win_edit, "win_edit");
   gtk_container_set_border_width (GTK_CONTAINER (win_edit), 12);
-  gtk_window_set_title (GTK_WINDOW (win_edit), _("Edycja danych kontaktu"));
+  gtk_window_set_title (GTK_WINDOW (win_edit), "Edycja danych kontaktu");
   gtk_window_set_position (GTK_WINDOW (win_edit), GTK_WIN_POS_CENTER);
   gtk_window_set_default_size (GTK_WINDOW (win_edit), 400, 300);
   gtk_window_set_resizable (GTK_WINDOW (win_edit), FALSE);
@@ -1861,7 +1860,7 @@ create_win_edit (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_size_request (entry_id, 170, -1);
   GTK_WIDGET_SET_FLAGS (entry_id, GTK_CAN_DEFAULT);
-  gtk_tooltips_set_tip (tooltips, entry_id, _("Identyfikator kontaktu w systemie Tlen.pl, na przyk\305\202ad jasio@tlen.pl"), NULL);
+  gtk_tooltips_set_tip (tooltips, entry_id, "Identyfikator kontaktu w systemie Tlen.pl, na przyk\305\202ad jasio@tlen.pl", NULL);
 
   entry_name = gtk_entry_new ();
   gtk_widget_set_name (entry_name, "entry_name");
@@ -1870,9 +1869,9 @@ create_win_edit (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_size_request (entry_name, 170, -1);
-  gtk_tooltips_set_tip (tooltips, entry_name, _("Nazwa dla kontaktu widoczna na li\305\233cie."), NULL);
+  gtk_tooltips_set_tip (tooltips, entry_name, "Nazwa dla kontaktu widoczna na li\305\233cie.", NULL);
 
-  label25 = gtk_label_new (_("Identyfikator w systemie Tlen.pl:"));
+  label25 = gtk_label_new ("Identyfikator w systemie Tlen.pl:");
   gtk_widget_set_name (label25, "label25");
   gtk_widget_show (label25);
   gtk_table_attach (GTK_TABLE (table2), label25, 0, 1, 0, 1,
@@ -1880,7 +1879,7 @@ create_win_edit (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label25), 0, 0.5);
 
-  label26 = gtk_label_new (_("Na li\305\233cie wy\305\233wietli si\304\231:"));
+  label26 = gtk_label_new ("Na li\305\233cie wy\305\233wietli si\304\231:");
   gtk_widget_set_name (label26, "label26");
   gtk_widget_show (label26);
   gtk_table_attach (GTK_TABLE (table2), label26, 0, 1, 1, 2,
@@ -1888,7 +1887,7 @@ create_win_edit (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label26), 0, 0.5);
 
-  label36 = gtk_label_new (_("<b>Identyfikacja</b>"));
+  label36 = gtk_label_new ("<b>Identyfikacja</b>");
   gtk_widget_set_name (label36, "label36");
   gtk_widget_show (label36);
   gtk_frame_set_label_widget (GTK_FRAME (frame4), label36);
@@ -1913,7 +1912,7 @@ create_win_edit (void)
   gtk_table_set_row_spacings (GTK_TABLE (table3), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table3), 12);
 
-  label27 = gtk_label_new (_("Grupa kontaktu"));
+  label27 = gtk_label_new ("Grupa kontaktu");
   gtk_widget_set_name (label27, "label27");
   gtk_widget_show (label27);
   gtk_table_attach (GTK_TABLE (table3), label27, 0, 1, 0, 1,
@@ -1921,7 +1920,7 @@ create_win_edit (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label27), 0, 0.5);
 
-  label28 = gtk_label_new (_("Numer telefonu kom\303\263rkowego"));
+  label28 = gtk_label_new ("Numer telefonu kom\303\263rkowego");
   gtk_widget_set_name (label28, "label28");
   gtk_widget_show (label28);
   gtk_table_attach (GTK_TABLE (table3), label28, 0, 1, 1, 2,
@@ -1938,7 +1937,7 @@ create_win_edit (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_widget_set_size_request (entry_phone, 170, -1);
   gtk_widget_set_sensitive (entry_phone, FALSE);
-  gtk_tooltips_set_tip (tooltips, entry_phone, _("Numer telefonu kom\303\263rkowego tej osoby. Na razie do niczego si\304\231 nie przyda :)"), NULL);
+  gtk_tooltips_set_tip (tooltips, entry_phone, "Numer telefonu kom\303\263rkowego tej osoby. Na razie do niczego si\304\231 nie przyda :)", NULL);
 
   combobox_group = gtk_combo_box_entry_new_text ();
   gtk_widget_set_name (combobox_group, "combobox_group");
@@ -1948,7 +1947,7 @@ create_win_edit (void)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_widget_set_size_request (combobox_group, 170, -1);
 
-  label37 = gtk_label_new (_("<b>Pozosta\305\202e informacje</b>"));
+  label37 = gtk_label_new ("<b>Pozosta\305\202e informacje</b>");
   gtk_widget_set_name (label37, "label37");
   gtk_widget_show (label37);
   gtk_frame_set_label_widget (GTK_FRAME (frame5), label37);
@@ -1979,7 +1978,7 @@ create_win_edit (void)
   gtk_container_add (GTK_CONTAINER (scrolledwindow3), textview_notes);
   gtk_widget_set_sensitive (textview_notes, FALSE);
 
-  label38 = gtk_label_new (_("<b>Notatki</b>"));
+  label38 = gtk_label_new ("<b>Notatki</b>");
   gtk_widget_set_name (label38, "label38");
   gtk_widget_show (label38);
   gtk_frame_set_label_widget (GTK_FRAME (frame6), label38);
@@ -1995,7 +1994,7 @@ create_win_edit (void)
   gtk_widget_show (hbox186);
   gtk_box_pack_start (GTK_BOX (vbox6), hbox186, FALSE, TRUE, 0);
 
-  space1 = gtk_label_new (_(" "));
+  space1 = gtk_label_new (" ");
   gtk_widget_set_name (space1, "space1");
   gtk_widget_show (space1);
   gtk_box_pack_start (GTK_BOX (hbox186), space1, TRUE, FALSE, 0);
@@ -2055,16 +2054,13 @@ create_win_about (void)
     NULL
   };
   const gchar *documenters[] = { NULL };
-  /* TRANSLATORS: Replace this string with your names, one name per line. */
-  gchar *translators = _("translator_credits");
+  gchar *translators = NULL;
   GtkWidget *win_about;
   GdkPixbuf *win_about_icon_pixbuf;
 
-  if (!strcmp (translators, "translator_credits"))
-    translators = NULL;
   win_about = gnome_about_new ("glen", VERSION,
-                        _("\302\251 2005 Krzysztof Godlewski <krzygod@gmail.com>"),
-                        _("Klient sieci Tlen.pl dla \305\233rodowiska Gnome"),
+                        "\302\251 2005 Krzysztof Godlewski <krzygod@gmail.com>",
+                        "Klient sieci Tlen.pl dla \305\233rodowiska Gnome",
                         authors,
                         documenters,
                         translators,
@@ -2083,5 +2079,105 @@ create_win_about (void)
   GLADE_HOOKUP_OBJECT_NO_REF (win_about, win_about, "win_about");
 
   return win_about;
+}
+
+GtkWidget*
+create_win_arch (void)
+{
+  GtkWidget *win_arch;
+  GtkWidget *vbox11;
+  GtkWidget *hbox_stuff;
+  GtkWidget *scrolledwindow4;
+  GtkWidget *tree_users;
+  GtkWidget *vbox12;
+  GtkWidget *scrolledwindow5;
+  GtkWidget *tree_list;
+  GtkWidget *scroll;
+  GtkWidget *hbox190;
+  GtkWidget *button_close;
+
+  win_arch = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_widget_set_name (win_arch, "win_arch");
+  gtk_container_set_border_width (GTK_CONTAINER (win_arch), 12);
+  gtk_window_set_title (GTK_WINDOW (win_arch), "Archiwum rozm\303\263w");
+  gtk_window_set_default_size (GTK_WINDOW (win_arch), 600, 400);
+
+  vbox11 = gtk_vbox_new (FALSE, 6);
+  gtk_widget_set_name (vbox11, "vbox11");
+  gtk_widget_show (vbox11);
+  gtk_container_add (GTK_CONTAINER (win_arch), vbox11);
+
+  hbox_stuff = gtk_hbox_new (FALSE, 6);
+  gtk_widget_set_name (hbox_stuff, "hbox_stuff");
+  gtk_widget_show (hbox_stuff);
+  gtk_box_pack_start (GTK_BOX (vbox11), hbox_stuff, TRUE, TRUE, 0);
+
+  scrolledwindow4 = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_name (scrolledwindow4, "scrolledwindow4");
+  gtk_widget_show (scrolledwindow4);
+  gtk_box_pack_start (GTK_BOX (hbox_stuff), scrolledwindow4, FALSE, TRUE, 0);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow4), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow4), GTK_SHADOW_ETCHED_IN);
+
+  tree_users = gtk_tree_view_new ();
+  gtk_widget_set_name (tree_users, "tree_users");
+  gtk_widget_show (tree_users);
+  gtk_container_add (GTK_CONTAINER (scrolledwindow4), tree_users);
+  gtk_widget_set_size_request (tree_users, 150, -1);
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree_users), FALSE);
+  gtk_tree_view_set_reorderable (GTK_TREE_VIEW (tree_users), TRUE);
+  gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW (tree_users), TRUE);
+
+  vbox12 = gtk_vbox_new (FALSE, 6);
+  gtk_widget_set_name (vbox12, "vbox12");
+  gtk_widget_show (vbox12);
+  gtk_box_pack_start (GTK_BOX (hbox_stuff), vbox12, TRUE, TRUE, 0);
+
+  scrolledwindow5 = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_name (scrolledwindow5, "scrolledwindow5");
+  gtk_widget_show (scrolledwindow5);
+  gtk_box_pack_start (GTK_BOX (vbox12), scrolledwindow5, FALSE, FALSE, 0);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow5), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow5), GTK_SHADOW_ETCHED_IN);
+
+  tree_list = gtk_tree_view_new ();
+  gtk_widget_set_name (tree_list, "tree_list");
+  gtk_widget_show (tree_list);
+  gtk_container_add (GTK_CONTAINER (scrolledwindow5), tree_list);
+  gtk_widget_set_size_request (tree_list, -1, 150);
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree_list), FALSE);
+  gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW (tree_list), TRUE);
+
+  scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_name (scroll, "scroll");
+  gtk_widget_show (scroll);
+  gtk_box_pack_start (GTK_BOX (vbox12), scroll, TRUE, TRUE, 0);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scroll), GTK_SHADOW_ETCHED_IN);
+
+  hbox190 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_set_name (hbox190, "hbox190");
+  gtk_widget_show (hbox190);
+  gtk_box_pack_start (GTK_BOX (vbox11), hbox190, FALSE, FALSE, 0);
+
+  button_close = gtk_button_new_from_stock ("gtk-close");
+  gtk_widget_set_name (button_close, "button_close");
+  gtk_widget_show (button_close);
+  gtk_box_pack_start (GTK_BOX (hbox190), button_close, FALSE, FALSE, 0);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (win_arch, win_arch, "win_arch");
+  GLADE_HOOKUP_OBJECT (win_arch, vbox11, "vbox11");
+  GLADE_HOOKUP_OBJECT (win_arch, hbox_stuff, "hbox_stuff");
+  GLADE_HOOKUP_OBJECT (win_arch, scrolledwindow4, "scrolledwindow4");
+  GLADE_HOOKUP_OBJECT (win_arch, tree_users, "tree_users");
+  GLADE_HOOKUP_OBJECT (win_arch, vbox12, "vbox12");
+  GLADE_HOOKUP_OBJECT (win_arch, scrolledwindow5, "scrolledwindow5");
+  GLADE_HOOKUP_OBJECT (win_arch, tree_list, "tree_list");
+  GLADE_HOOKUP_OBJECT (win_arch, scroll, "scroll");
+  GLADE_HOOKUP_OBJECT (win_arch, hbox190, "hbox190");
+  GLADE_HOOKUP_OBJECT (win_arch, button_close, "button_close");
+
+  return win_arch;
 }
 
