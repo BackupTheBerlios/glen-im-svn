@@ -5,11 +5,11 @@
 #include <gnome.h>
 
 typedef struct {
-	gchar *tooltip;	/* co pojawi sie po najechaniu na emotke myszka */
+	guchar *tooltip;/* co pojawi sie po najechaniu na emotke myszka */
 	GSList *tags;	/* np. :), :-) */
-	gchar *data;	/* zawartosc pliku */
+	guchar *data;	/* zawartosc pliku */
 	gsize size;	/* rozmiar powyzszego */
-	gchar *url;	/* nazwa pliku */
+	guchar *url;	/* nazwa pliku */
 } Emote;
 
 typedef struct {

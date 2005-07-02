@@ -11,3 +11,4 @@ GtkWidget* create_win_msg_send (void);
 GtkWidget* create_win_msg_recv (void);
 GtkWidget* create_win_edit (void);
 GtkWidget* create_win_about (void);
+GtkWidget* create_win_arch (void);

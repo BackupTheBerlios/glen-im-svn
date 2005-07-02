@@ -39,7 +39,10 @@ struct structUser {
 	/* Lista ArchEntry do zrzucenia na dysk */
 	GSList *history;
 	/* Plik do którego leci historia */
-	FILE *fp;
+	FILE *arch_file;
+	/* Czas ostatniej wypowiedzi w rozmowie. Potrzebne zeby odroznic nowa rozmowe
+	   po zakonczeniu starej */
+	time_t last_chat;
 };
 
 typedef struct structUser User;
@@ -75,8 +78,8 @@ Group * group_new(const gchar *name);
 Group * group_get(const gchar *name);
 GSList * group_remove(Group *);
 
-GSList *group_get_list();
-GSList *user_get_list();
+GSList *group_get_list(void);
+GSList *user_get_list(void);
 
 // grupa dla kontaktow na autoryzacje od ktorych czekamy
 #define GROUP_NAME_WAIT_AUTH "Oczekiwanie na autoryzacjÄ™"

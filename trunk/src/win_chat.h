@@ -33,7 +33,7 @@ struct structChat
 
 typedef struct structChat Chat;
 
-void chat_init();
+void chat_init(void);
 
 Chat *win_chat_create(const gchar *id);
 Chat *win_chat_get(const gchar *id, gboolean create_if_doesnt_exist,

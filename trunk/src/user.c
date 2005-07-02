@@ -140,7 +140,7 @@ GSList * user_remove(User *u)
 	return user_list;
 }
 
-GSList * user_get_list()
+GSList * user_get_list(void)
 {
 	return user_list;
 }
@@ -198,7 +198,7 @@ GSList * group_remove(Group *g)
 	return group_list;
 }
 
-GSList *group_get_list()
+GSList *group_get_list(void)
 {
 	return group_list;
 }

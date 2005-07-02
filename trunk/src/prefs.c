@@ -37,11 +37,11 @@ gchar *pref_misc_browser_cmd = "gnome-moz-remote --newwin %s";
 
 /* Okno g³ówne */
 /* Pozycja okna */
-guint pref_win_main_pos_x = 100;
-guint pref_win_main_pos_y = 100;
+gint pref_win_main_pos_x = 100;
+gint pref_win_main_pos_y = 100;
 /* Rozmiar okna glownego. */
-guint pref_win_main_width = 250;
-guint pref_win_main_height = 400;
+gint pref_win_main_width = 250;
+gint pref_win_main_height = 400;
 
 static GKeyFile *pref_key_file = NULL;
 

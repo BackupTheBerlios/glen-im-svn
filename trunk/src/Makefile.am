@@ -9,6 +9,7 @@ INCLUDES = \
 bin_PROGRAMS = glen
 
 glen_SOURCES = \
+	arch.c arch.h \
 	callbacks.c callbacks.h \
 	dialog_auth.c dialog_auth.h \
 	dock.c dock.h \
@@ -22,6 +23,7 @@ glen_SOURCES = \
 	support.c support.h \
 	tlen.c tlen.h \
 	user.c user.h \
+	win_arch.c win_arch.h \
 	win_chat.c win_chat.h \
 	win_conf_wizard.c win_conf_wizard.h \
 	win_desc.c win_desc.h \
@@ -29,7 +31,8 @@ glen_SOURCES = \
 	win_main.c win_main.h \
 	win_msg_recv.c win_msg_recv.h \
 	win_msg_send.c win_msg_send.h \
-	win_prefs.c win_prefs.h 
+	win_prefs.c win_prefs.h
+
 
 glen_LDADD = @PACKAGE_LIBS@ $(INTLLIBS) -ltlen2 -L/usr/local/lib/
 

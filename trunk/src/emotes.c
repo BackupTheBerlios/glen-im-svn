@@ -87,7 +87,8 @@ static int xml_parse_emo(const char *filebase)
 	xmlDocPtr doc;
 	FILE *fp;
 	gsize len;
-	char *buf, *tmp;
+	unsigned char *tmp;
+	char *buf;
 	Emote *em;
 	int ret;
 	gchar *filename;
@@ -128,7 +129,7 @@ static int xml_parse_emo(const char *filebase)
 	}
 
 	tmp = xmlNodeGetContent(root);
-	emote_set->template = g_strdup(tmp);
+	emote_set->template = g_strdup((gchar *)tmp);
 	xmlFree(tmp);
 
 	xmlFreeDoc(doc);
@@ -145,7 +146,7 @@ static int xml_parse_emo(const char *filebase)
 
 	root = xmlDocGetRootElement(doc);
 	if(root == NULL || root->name == NULL ||
-			xmlStrcmp(root->name, "defs") != 0) {
+			xmlStrcmp(root->name, (unsigned char *)"defs") != 0) {
 		xmlFreeDoc(doc);
 		g_free(buf);
 		puts("NULL 2");
@@ -155,8 +156,8 @@ static int xml_parse_emo(const char *filebase)
 	for(cur_node = root->children; cur_node != NULL;cur_node =
 			cur_node->next) {
 		if(cur_node->type != XML_ELEMENT_NODE ||
-			xmlStrcmp(cur_node->name, "i") != 0) {
-			if(xmlStrcmp(cur_node->name, "text") == 0)
+			xmlStrcmp(cur_node->name, (unsigned char *)"i") != 0) {
+			if(xmlStrcmp(cur_node->name, (unsigned char *)"text") == 0)
 				continue;
 			else {
 				ret = 1;
@@ -164,7 +165,7 @@ static int xml_parse_emo(const char *filebase)
 			}
 		}
 
-		tmp = xmlGetProp(cur_node, "g");
+		tmp = xmlGetProp(cur_node, (unsigned char *)"g");
 		/* emotka bez nazwy pliku, idziemy dalej */
 		if(tmp == NULL)
 			continue;
@@ -184,35 +185,34 @@ static int xml_parse_emo(const char *filebase)
 			
 		em = (Emote *)g_malloc(sizeof(Emote));
 		
-		em->data = (gchar *)g_malloc(len);
+		em->data = g_malloc(len);
 		fread(em->data, len, 1, fp);
 		fclose(fp);
 
 		em->size = len;
 		em->url = tmp;
 		
-		tmp = xmlGetProp(cur_node, "d");
+		tmp = xmlGetProp(cur_node, (unsigned char *)"d");
 		if(tmp == NULL)
-			em->tooltip = g_strdup("");
+			em->tooltip = (guchar *)g_strdup("");
 		else
-			em->tooltip = g_strdup(tmp);
+			em->tooltip = (guchar *)g_strdup((gchar *)tmp);
 
 		em->tags = NULL; //g_slist_alloc();
 
 		for(child_node = cur_node->children; child_node != NULL;
 			child_node = child_node->next) {
 			if(child_node->type == XML_ELEMENT_NODE) {
-				if(xmlStrcmp(child_node->name, "t") == 0) {
+				if(xmlStrcmp(child_node->name, (unsigned char *)"t") == 0) {
 					tmp = xmlNodeGetContent(child_node);
-					if(strlen(tmp) == 0) continue;
+					if(strlen((char *)tmp) == 0) continue;
 /*
 					printf("I: '%s', '%s', '%s'\n", em->url,
 						tmp,
 						g_markup_escape_text(tmp, -1));
 */
 					em->tags = g_slist_append(em->tags,
-						g_markup_escape_text(tmp,
-								-1));
+						g_markup_escape_text((gchar *)tmp, -1));
 				}
 			}
 		}
@@ -237,7 +237,7 @@ Emote * emote_get_by_url(const gchar *url)
 	while(l != NULL) {
 		e = (Emote *)l->data;
 
-		if(e != NULL && g_strcasecmp(url, e->url) == 0)
+		if(e != NULL && g_strcasecmp(url, (gchar *)e->url) == 0)
 			return e;
 
 		l = l->next;

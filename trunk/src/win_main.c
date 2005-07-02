@@ -1,5 +1,6 @@
 
 #include "win_main.h"
+#include "win_arch.h"
 #include "win_desc.h"
 #include "win_msg_send.h"
 #include "win_edit.h"
@@ -7,6 +8,7 @@
 #include "interface.h"
 #include "support.h"
 #include "prefs.h"
+#include "arch.h"
 #include "dock.h"
 #include "emotes.h"
 #include "tlen.h"
@@ -123,7 +125,7 @@ GtkWidget * win_main_create(void)
 	/* stworz grupe "kontakty") */
 	//(void)win_main_get_group(NULL);
 
-	if(status_icons_load() == FALSE) {
+	if (status_icons_load() == FALSE) {
 		/* XXX: okienko */
 		g_warning("Nie mozna zaladowac ikon. Blad instalacji?");
 		return NULL;
@@ -168,7 +170,7 @@ void win_main_user_add(User *user)
 
 	g = user->group;
 	/* jesli grupa nie jest dodana do drzewka, dodaj ja teraz */
-	if(g->row == NULL) {
+	if (g->row == NULL) {
 		g_debug("grupy %s nie ma w tree, dodaje", g->name);
 		win_main_group_add(g);
 	}
@@ -206,12 +208,12 @@ void win_main_user_update(User *user)
 	
 	g_free(user->text);
 
-	if(o2_status_is_avail(user->status))
+	if (o2_status_is_avail(user->status))
 		color = avail_color;
 	else
 		color = unavail_color;
 
-	if(user->desc != NULL) {
+	if (user->desc != NULL) {
 		desc = g_markup_escape_text(user->desc, -1);
 		user->text = g_strdup_printf(desc_fmt, color, user->name, desc);
 		g_free(desc);
@@ -237,7 +239,7 @@ void win_main_user_set_group(User *u, Group *g)
 	GtkTreeIter iter, parent;
 	GtkTreePath *path, *parent_path;
 
-	if(u->group == g) {
+	if (u->group == g) {
 		printf("win_main_user_set_group: nie zmieniam dla %s\n",
 			u->id);
 		return;
@@ -248,15 +250,15 @@ void win_main_user_set_group(User *u, Group *g)
 	/* jesli usuniemy ostatniego usera w grupie trzeba usnac ja tez z
 	 * modelu */
 	z = u->group;
-	if(z->child_count == 1/* && 
-		g_strcasecmp(u->group->name, "Kontakty")*/ != 0) {
+	if (z->child_count == 1/* && 
+		g_strcasecmp(u->group->name, "Kontakty") != 0 */) {
 		printf("Usuwam grupe \"%s\"\n", z->name);
 		g = u->group;
 		win_main_group_remove(z);
 		z = NULL;
 	}
 
-	if(g->row == NULL)
+	if (g->row == NULL)
 		win_main_group_add(g);
 
 	parent_path = gtk_tree_row_reference_get_path(g->row);
@@ -271,7 +273,7 @@ void win_main_user_set_group(User *u, Group *g)
 	gtk_tree_path_free(path);
 	gtk_tree_path_free(parent_path);
 
-	if(z != NULL)
+	if (z != NULL)
 		win_main_group_update(z);
 
 	win_main_group_update(g);
@@ -322,7 +324,7 @@ gboolean win_main_is_iconified(void)
 
 void win_main_toggle_hidden(void)
 {
-	if(main_win_hidden == TRUE) {
+	if (main_win_hidden == TRUE) {
 		gtk_widget_show(win_main);
 		gtk_widget_grab_focus(win_main);
 		win_main_geometry_restore();
@@ -342,12 +344,11 @@ void win_main_group_add(Group *group)
 	g_assert(group->row == NULL);
 
 	gtk_tree_store_append(model, &top, NULL);
-	gtk_tree_store_set(model, &top, COLUMN_TEXT, group->name,
-		COLUMN_PTR, group,
-		COLUMN_TYPE, TYPE_GROUP, -1);
+	gtk_tree_store_set(model, &top, COLUMN_TEXT, group->name, COLUMN_PTR, group, COLUMN_TYPE, TYPE_GROUP, -1); 
 
 	path = gtk_tree_model_get_path(GTK_TREE_MODEL(model), &top);
 	group->row = gtk_tree_row_reference_new(GTK_TREE_MODEL(model), path);
+
 	gtk_tree_path_free(path);
 }
 
@@ -373,7 +374,7 @@ void win_main_group_remove(Group *g)
 
 void win_main_group_update(Group *g)
 {
-	if(g->text != NULL)
+	if (g->text != NULL)
 		g_free(g->text);
 
 	g->text = g_strdup_printf("<b>%s <span color=\"#bbbbbb\">"
@@ -388,7 +389,7 @@ void win_main_set_status(guint status, const gchar *desc)
 	gchar *p, *s;
 
 	w = lookup_widget(win_main, "user_tree");
-	if(status == TLEN_PRESENCE_UNAVAILABLE)// {
+	if (status == TLEN_PRESENCE_UNAVAILABLE)// {
 		win_main_clear();
 //		gtk_tree_view_set_model(GTK_TREE_VIEW(w), NULL);
 //	} else {
@@ -405,7 +406,7 @@ void win_main_set_status(guint status, const gchar *desc)
 
 	p = (gchar *)get_status_desc(status);
 
-	if(desc != NULL && strlen(desc) > 0)
+	if (desc != NULL && strlen(desc) > 0)
 		s = g_strdup_printf("%s: %s", p, desc);
 	else
 		s = g_strdup_printf("%s", p);
@@ -457,17 +458,17 @@ void win_main_reset_autoaway_timer(void)
 {
 	guint status;
 	
-	if(autoaway_timer_id> 0) {
+	if (autoaway_timer_id> 0) {
 		gtk_timeout_remove(autoaway_timer_id);
 		autoaway_timer_id = -1;
 	}
 
-	if(o2_is_connected() == FALSE) {
+	if (o2_is_connected() == FALSE) {
 		is_auto_away = FALSE;
 		return;
 	}
 
-	if(is_auto_away == TRUE) {
+	if (is_auto_away == TRUE) {
 		win_main_set_status(saved_status, saved_desc);
 		g_free(saved_desc);
 		saved_desc = NULL;
@@ -475,7 +476,7 @@ void win_main_reset_autoaway_timer(void)
 	}
 	
 	status = o2_get_status();
-	if(pref_status_auto_away == FALSE ||
+	if (pref_status_auto_away == FALSE ||
 		status == TLEN_PRESENCE_AWAY ||
 		status == TLEN_PRESENCE_INVISIBLE ||
 		status == TLEN_PRESENCE_EXT_AWAY ||
@@ -514,10 +515,10 @@ static gboolean autoaway_timeout_cb(gpointer data)
 {
 	gchar buf[1024];
 
-	if(data == 0) {
+	if (data == 0) {
 		saved_status = o2_get_status();
 		saved_desc = g_strdup(o2_get_desc());
-		if(pref_status_auto_away_desc) {
+		if (pref_status_auto_away_desc) {
 			/* ugly */
 			snprintf(buf, sizeof(buf), "%s%s[%s %s]", (saved_desc == NULL ? "" : saved_desc),
 				(saved_desc == NULL ? "" : " "), get_time(NULL), get_date(NULL));
@@ -594,20 +595,29 @@ GdkPixbuf *get_status_icon_pixbuf(guint status)
 
 void quit_app_cb(void)
 {
+	GSList *user = NULL;
+
 	win_main_geometry_save();
 
-	if(pref_status_save_desc) {
-		if(o2_get_desc() == NULL)
+	if (pref_status_save_desc) {
+		if (o2_get_desc() == NULL)
 			pref_status_desc = "";
 		else
 			pref_status_desc = g_strdup(o2_get_desc());
 	}
 
-	if(pref_status_save_status == TRUE)
+	if (pref_status_save_status == TRUE)
 		pref_status_saved = o2_get_status();
 
-	if(o2_is_connected())
+	if (o2_is_connected())
 		o2_set_status(TLEN_PRESENCE_UNAVAILABLE, NULL);
+
+	/* Dla ka¿dego usera zrzuæ archiwum na dysk */
+	user = user_get_list();
+	while (user != NULL) {
+		arch_close(user->data);
+		user = user->next;
+	}
 
 	prefs_save();
 	emote_unload_set();
@@ -616,10 +626,8 @@ void quit_app_cb(void)
 
 static void create_model(void)
 {
-	model = gtk_tree_store_new(NUM_COLS, G_TYPE_STRING,
-		G_TYPE_POINTER, G_TYPE_INT);
-	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(model),
-		COLUMN_TYPE, GTK_SORT_ASCENDING);
+	model = gtk_tree_store_new(NUM_COLS, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_INT);
+	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(model), COLUMN_TYPE, GTK_SORT_ASCENDING);
 }
 
 static void create_view(void)
@@ -643,26 +651,21 @@ static void create_view(void)
 
 	renderer = gtk_cell_renderer_pixbuf_new();
 	gtk_tree_view_column_pack_start(col, renderer, FALSE);
-	gtk_tree_view_column_set_cell_data_func(col, renderer,
-		pixbuf_data_function, NULL, NULL);
+	gtk_tree_view_column_set_cell_data_func(col, renderer, pixbuf_data_function, NULL, NULL);
 	
 	renderer = gtk_cell_renderer_text_new();
 	gtk_tree_view_column_pack_start(col, renderer, TRUE);
-	gtk_tree_view_column_set_cell_data_func(col, renderer,
-		text_data_function, NULL, NULL);
+	gtk_tree_view_column_set_cell_data_func(col, renderer, text_data_function, NULL, NULL);
 
 	gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(model));
 	g_object_unref(model);
 
 	sel = gtk_tree_view_get_selection(treeview);
 	/* zeby uniknac lookup_widget przekazujemy treeview w user_data */
-	gtk_tree_selection_set_select_function(sel, selection_func,
-		(gpointer)treeview, NULL);
-	g_signal_connect(G_OBJECT(treeview), "button_release_event",
-		G_CALLBACK(button_clicked_cb), NULL);
+	gtk_tree_selection_set_select_function(sel, selection_func, (gpointer)treeview, NULL);
+	g_signal_connect(G_OBJECT(treeview), "button_release_event", G_CALLBACK(button_clicked_cb), NULL);
 
-	g_signal_connect(G_OBJECT(treeview), "row-activated",
-		G_CALLBACK(tree_row_activated_cb), NULL);
+	g_signal_connect(G_OBJECT(treeview), "row-activated", G_CALLBACK(tree_row_activated_cb), NULL);
 }
 
 static void create_status_menu(void)
@@ -783,26 +786,28 @@ static void create_userlist_menu(void)
 	gtk_menu_shell_append(GTK_MENU_SHELL(userlist_menu), i);
 	g_signal_connect_swapped(G_OBJECT(i), "activate",
 		G_CALLBACK(userlist_menu_item_cb), "1");
-	gtk_widget_add_accelerator(i, "activate", accel, GDK_M,
-		GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	gtk_widget_add_accelerator(i, "activate", accel, GDK_M, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_show(i);
 	/* XXX: ikonki... */
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(i),
-		gtk_image_new_from_stock("gnome-stock-mail-snd",
-			GTK_ICON_SIZE_MENU));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(i), gtk_image_new_from_stock("gnome-stock-mail-snd", GTK_ICON_SIZE_MENU));
 
 	s = toutf("Rozmowa");
 	i = gtk_image_menu_item_new_with_label(s);
 	g_free(s);
 	gtk_menu_shell_append(GTK_MENU_SHELL(userlist_menu), i);
-	g_signal_connect_swapped(G_OBJECT(i), "activate",
-		G_CALLBACK(userlist_menu_item_cb), "2");
-	gtk_widget_add_accelerator(i, "activate", accel, GDK_C,
-		GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	g_signal_connect_swapped(G_OBJECT(i), "activate", G_CALLBACK(userlist_menu_item_cb), "2");
+	gtk_widget_add_accelerator(i, "activate", accel, GDK_C, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_show(i);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(i),
-		gtk_image_new_from_stock("gnome-stock-mail",
-			GTK_ICON_SIZE_MENU));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(i), gtk_image_new_from_stock("gnome-stock-mail", GTK_ICON_SIZE_MENU));
+
+	s = toutf("Archiwum");
+	i = gtk_image_menu_item_new_with_label(s);
+	g_free(s);
+	gtk_menu_shell_append(GTK_MENU_SHELL(userlist_menu), i);
+	g_signal_connect_swapped(G_OBJECT(i), "activate", G_CALLBACK(userlist_menu_item_cb), "arch");
+	gtk_widget_add_accelerator(i, "activate", accel, GDK_A, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	gtk_widget_show(i);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(i), gtk_image_new_from_stock("gnome-stock-book-open", GTK_ICON_SIZE_MENU));
 
 	/* separator */
 	i = gtk_menu_item_new();
@@ -877,14 +882,18 @@ static void create_main_menu(void)
 	i = gtk_image_menu_item_new_with_label(s);
 	g_free(s);
 	gtk_menu_shell_append(GTK_MENU_SHELL(main_menu), i);
-	g_signal_connect_swapped(G_OBJECT(i), "activate",
-		G_CALLBACK(main_menu_item_cb), "4");
-	gtk_widget_add_accelerator(i, "activate", accel, GDK_A,
-		GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	g_signal_connect_swapped(G_OBJECT(i), "activate", G_CALLBACK(main_menu_item_cb), "4");
+	gtk_widget_add_accelerator(i, "activate", accel, GDK_N, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_show(i);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(i),
-		gtk_image_new_from_stock("gtk-add",
-			GTK_ICON_SIZE_MENU));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(i), gtk_image_new_from_stock("gtk-add", GTK_ICON_SIZE_MENU));
+
+	s = toutf("Archiwum");
+	i = gtk_image_menu_item_new_with_label(s);
+	g_free(s);
+	gtk_menu_shell_append(GTK_MENU_SHELL(main_menu), i);
+	g_signal_connect_swapped(G_OBJECT(i), "activate", G_CALLBACK(main_menu_item_cb), "arch");
+	gtk_widget_show(i);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(i), gtk_image_new_from_stock("gnome-stock-book-open", GTK_ICON_SIZE_MENU));
 	
 	i = gtk_menu_item_new();
 	gtk_container_add(GTK_CONTAINER(main_menu), i);
@@ -1004,7 +1013,7 @@ static void text_data_function(GtkTreeViewColumn *col, GtkCellRenderer *r,
 	guint type;
 
 	gtk_tree_model_get(mod, iter, COLUMN_TYPE, &type, COLUMN_PTR, &ptr, -1);
-	if(type == TYPE_USER) {
+	if (type == TYPE_USER) {
 		user = (User *)ptr;
 		g_object_set(r, 
 			//"font", "normal",
@@ -1036,9 +1045,9 @@ static void pixbuf_data_function(GtkTreeViewColumn *col, GtkCellRenderer *r,
 	gtk_tree_model_get(mod, iter, COLUMN_TYPE, &type, COLUMN_PTR, &ptr,
 		-1);
 
-	if(type == TYPE_GROUP) {
+	if (type == TYPE_GROUP) {
 		g = (Group *)ptr;
-		if(g->expanded == TRUE)
+		if (g->expanded == TRUE)
 			pb = expander_open_pixbuf;
 		else
 			pb = expander_closed_pixbuf;
@@ -1069,39 +1078,39 @@ static gint sort_func(GtkTreeModel *m, GtkTreeIter *a, GtkTreeIter *b,
 	gtk_tree_model_get(m, a, COLUMN_TYPE, &type1, COLUMN_PTR, &ptr1, -1);
 	gtk_tree_model_get(m, b, COLUMN_TYPE, &type2, COLUMN_PTR, &ptr2, -1);
 
-	if(type1 == type2) {
-		if(type1 == TYPE_GROUP) {
+	if (type1 == type2) {
+		if (type1 == TYPE_GROUP) {
 			Group *g1 = (Group *)ptr1;
 			Group *g2 = (Group *)ptr2;
 
 			/* Grupa "Kontakty" zawsze na gorze, bez
 			 * autoryzacji/nieznani na dole */
-			if(g_strcasecmp(g1->name, "Kontakty") == 0)
+			if (g_strcasecmp(g1->name, "Kontakty") == 0)
 				ret = -1;
-			else if(g_strcasecmp(g2->name, "Kontakty") == 0)
+			else if (g_strcasecmp(g2->name, "Kontakty") == 0)
 				ret = 1;
-			else if(g_strcasecmp(g1->name,
+			else if (g_strcasecmp(g1->name,
 					GROUP_NAME_WAIT_AUTH) == 0 ||
 				g_strcasecmp(g1->name, 
 					GROUP_NAME_NO_AUTH) == 0)
 				ret = 1;
-			else if(g_strcasecmp(g2->name,
+			else if (g_strcasecmp(g2->name,
 					GROUP_NAME_NO_AUTH) == 0 ||
 				g_strcasecmp(g2->name,
 					GROUP_NAME_WAIT_AUTH) == 0)
 				ret = -1;
 			else
 				ret = g_strcasecmp(g1->name, g2->name);
-		} else if(type1 == TYPE_USER) {
+		} else if (type1 == TYPE_USER) {
 			User *u1 = (User *)ptr1;
 			User *u2 = (User *)ptr2;
 			gboolean b1 = o2_status_is_avail(u1->status);
 			gboolean b2 = o2_status_is_avail(u2->status);
 			
-			if(b1 == b2)
+			if (b1 == b2)
 				ret = g_strcasecmp(u1->name,
 					u2->name);
-			else if(b1 == TRUE && b2 == FALSE)
+			else if (b1 == TRUE && b2 == FALSE)
 				ret = -1;
 			else ret = 1;
 		}
@@ -1121,13 +1130,13 @@ static gboolean selection_func(GtkTreeSelection *selection, GtkTreeModel *m,
 	gint type;
 	GtkTreeView *tv = (GtkTreeView *)user_data;
 
-	if(gtk_tree_model_get_iter(m, &it, path)) {
+	if (gtk_tree_model_get_iter(m, &it, path)) {
 		gtk_tree_model_get(m, &it, COLUMN_PTR, &ptr, COLUMN_TYPE,
 			&type, -1);
 
-		if(type == TYPE_GROUP && selected == FALSE) {
+		if (type == TYPE_GROUP && selected == FALSE) {
 			g = (Group *)ptr;
-			if(g->expanded == TRUE) {
+			if (g->expanded == TRUE) {
 				gtk_tree_view_collapse_row(tv, path);
 			} else {
 				gtk_tree_view_expand_row(tv, path, TRUE);
@@ -1150,7 +1159,7 @@ static gboolean button_clicked_cb(GtkWidget *w, GdkEvent *ev)
 {
 	GdkEventButton *eb = (GdkEventButton *)ev;
 
-	if(eb->button == 3 && is_user_selected == TRUE) {
+	if (eb->button == 3 && is_user_selected == TRUE) {
 		gtk_menu_popup(userlist_menu, NULL, NULL, NULL, NULL,
 			eb->button, eb->time);
 	}
@@ -1163,7 +1172,7 @@ static gint popup_menu_cb(GtkWidget *w, GdkEvent *ev)
 	GdkEventButton *eb = (GdkEventButton *)ev;
 	GtkMenu *menu = GTK_MENU(w);
 
-	if(ev->type != GDK_BUTTON_PRESS)
+	if (ev->type != GDK_BUTTON_PRESS)
 		return FALSE;
 	
 	gtk_menu_popup(menu, NULL, NULL, NULL, NULL,
@@ -1176,24 +1185,24 @@ static void status_menu_item_cb(gchar * i)
 {
 	gint status = -1;
 	
-	if(g_strcasecmp(i, "1") == 0)
+	if (g_strcasecmp(i, "1") == 0)
 		status = TLEN_PRESENCE_AVAILABLE;
-	else if(g_strcasecmp(i, "2") == 0)
+	else if (g_strcasecmp(i, "2") == 0)
 		status = TLEN_PRESENCE_CHATTY;
-	else if(g_strcasecmp(i, "3") == 0)
+	else if (g_strcasecmp(i, "3") == 0)
 		status = TLEN_PRESENCE_DND;
-	else if(g_strcasecmp(i, "4") == 0)
+	else if (g_strcasecmp(i, "4") == 0)
 		status = TLEN_PRESENCE_AWAY;
-	else if(g_strcasecmp(i, "5") == 0)
+	else if (g_strcasecmp(i, "5") == 0)
 		status = TLEN_PRESENCE_EXT_AWAY;
-	else if(g_strcasecmp(i, "6") == 0)
+	else if (g_strcasecmp(i, "6") == 0)
 		status = TLEN_PRESENCE_INVISIBLE;
-	else if(g_strcasecmp(i, "7") == 0)
+	else if (g_strcasecmp(i, "7") == 0)
 		status = TLEN_PRESENCE_UNAVAILABLE;
-	else if(g_strcasecmp(i, "8") == 0) /* ustaw stan opisowy */
+	else if (g_strcasecmp(i, "8") == 0) /* ustaw stan opisowy */
 		win_desc_show();
 
-	if(status != -1)
+	if (status != -1)
 		o2_set_status(status, NULL);
 }
 
@@ -1212,12 +1221,12 @@ static void userlist_menu_item_cb(gchar *i)
 
 	w = lookup_widget(win_main, "user_tree");
 	sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(w));
-	if(sel == NULL) {
+	if (sel == NULL) {
 		puts("no sel");
 		return;
 	}
 
-	if(gtk_tree_selection_count_selected_rows(sel) != 1)
+	if (gtk_tree_selection_count_selected_rows(sel) != 1)
 		return;
 
 	mod = GTK_TREE_MODEL(model);
@@ -1229,25 +1238,25 @@ static void userlist_menu_item_cb(gchar *i)
 	g_list_foreach(l, (GFunc)gtk_tree_path_free, NULL);
 	g_list_free(l);
 	
-	if(g_strcasecmp(i, "1") == 0) /* Wiadomo¶æ */
+	if (g_strcasecmp(i, "1") == 0) /* Wiadomo¶æ */
 		win_msg_send_show(u, NULL);
-	else if(g_strcasecmp(i, "2") == 0) /* rozmowa */
+	else if (g_strcasecmp(i, "2") == 0) /* rozmowa */
 		win_chat_get(u->id, TRUE, TRUE);
-	else if(g_strcasecmp(i, "3") == 0) /* edytuj */
+	else if (g_strcasecmp(i, "3") == 0) /* edytuj */
 		win_edit_create(u);
-	else if(g_strcasecmp(i, "4") == 0) { /* usun */
+	else if (g_strcasecmp(i, "4") == 0) { /* usun */
 		s = g_strdup_printf(
 			"Czy na pewno chcesz usun±æ u¿ytkownika <b>%s</b>?",
 			u->id);
 		p = toutf(s);
 		w = yes_no_dialog(win_main, p);
-		if(gtk_dialog_run(GTK_DIALOG(w)) == GTK_RESPONSE_YES) {
+		if (gtk_dialog_run(GTK_DIALOG(w)) == GTK_RESPONSE_YES) {
 			g = u->group;
 			win_main_user_remove(u);
 			o2_contact_remove(u->id);
 			user_remove(u);
 			g->child_count--;
-			if(g->child_count == 0) {
+			if (g->child_count == 0) {
 				win_main_group_remove(g);
 				group_remove(g);
 			}
@@ -1255,22 +1264,24 @@ static void userlist_menu_item_cb(gchar *i)
 		gtk_widget_destroy(w);
 		g_free(s);
 		g_free(p);
-	} else if(g_strcasecmp(i, "5") == 0) { /* skopiuj opis */
+	} else if (g_strcasecmp(i, "5") == 0) { /* skopiuj opis */
 		atom = gdk_atom_intern("CLIPBOARD", FALSE);
 		clip = gtk_clipboard_get(atom);
 
-		if(u->desc != NULL)
+		if (u->desc != NULL)
 			gtk_clipboard_set_text(clip, u->desc, strlen(u->desc));
 		else
 			gtk_clipboard_set_text(clip, "", 1);
+	} else if (g_strcasecmp(i, "arch") == 0) {
+		win_arch_show(u->id);
 	}
 }
 
 static void main_menu_item_cb(gchar *i)
 {
-	if(g_strcasecmp(i, "1") == 0) /* ustawienia */
+	if (g_strcasecmp(i, "1") == 0) /* ustawienia */
 		win_prefs_show();
-	else if(g_strcasecmp(i, "2") == 0) { /* o programie */
+	else if (g_strcasecmp(i, "2") == 0) { /* o programie */
 		GtkWidget *about;
 		about = create_win_about();
 		g_signal_connect(G_OBJECT(about), "delete_event",
@@ -1278,10 +1289,13 @@ static void main_menu_item_cb(gchar *i)
 		g_signal_connect(G_OBJECT(about), "close",
 			G_CALLBACK(gtk_widget_destroy), NULL);
 		gtk_widget_show(about);
-	} else if(g_strcasecmp(i, "3") == 0) /* wyjscie */
+	} else if (g_strcasecmp(i, "3") == 0) { /* wyjscie */
 		quit_app_cb();
-	else if(g_strcasecmp(i, "4") == 0) /* dodaj kontakt */
+	} else if (g_strcasecmp(i, "4") == 0) { /* dodaj kontakt */
 		win_edit_create(NULL);
+	} else if (g_strcasecmp(i, "arch") == 0) {
+		win_arch_show(NULL);
+	}
 }
 
 static gboolean icon_blink(gpointer data)
@@ -1294,11 +1308,11 @@ static gboolean icon_blink(gpointer data)
 
 	ret = TRUE;
 
-	if(on == FALSE) {
+	if (on == FALSE) {
 		pb = get_status_icon_pixbuf(TLEN_PRESENCE_UNAVAILABLE);
 	} else {
 		pb = get_status_icon_pixbuf(status);
-		if(o2_is_connected())
+		if (o2_is_connected())
 			ret = FALSE;
 	}
 

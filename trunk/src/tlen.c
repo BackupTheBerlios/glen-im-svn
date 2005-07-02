@@ -132,7 +132,7 @@ static void event_roster(TlenEvent *e)
 {
 	GSList *l;
 	TlenRosterItem *i;
-	guchar *name, *id, *group, *p;
+	gchar *name, *id, *group, *p;
 	User *u;
 	Group *g;
 

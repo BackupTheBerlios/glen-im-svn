@@ -63,7 +63,6 @@ void dock_set_status(guint status, const gchar *desc)
 //	g_free(p);
 }
 
-/* XXX: zapisywanie pozycji/rozmiaru okna */
 static gboolean clicked_cb(GtkWidget *dock, GdkEvent *ev)
 {
 	GdkEventButton *eb = (GdkEventButton *)ev;

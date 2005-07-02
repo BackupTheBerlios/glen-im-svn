@@ -215,11 +215,12 @@ gchar *text_view_get_text(GtkTextView *v)
 
 	buf = gtk_text_view_get_buffer(v);
 
-	if(buf == NULL)
+	if(buf == NULL) {
 		return NULL;
-	else {
+	} else {
 		gtk_text_buffer_get_start_iter(buf, &start);
 		gtk_text_buffer_get_end_iter(buf, &end);
+
 		return gtk_text_buffer_get_text(buf, &start, &end, TRUE);
 	}
 }
@@ -230,8 +231,9 @@ void text_view_set_text(GtkTextView *v, const gchar *text)
 	
 	buf = gtk_text_view_get_buffer(v);
 	
-	if(buf != NULL)
+	if (buf != NULL) {
 		gtk_text_buffer_set_text(buf, text, strlen(text));
+	}
 }
 
 void text_view_clear(GtkTextView *v)

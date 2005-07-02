@@ -8,14 +8,6 @@
 
 #include <gnome.h>
 
-#undef Q_
-#ifdef ENABLE_NLS
-#  define Q_(String) g_strip_context ((String), gettext (String))
-#else
-#  define Q_(String) g_strip_context ((String), (String))
-#endif
-
-
 /*
  * Public Functions.
  */

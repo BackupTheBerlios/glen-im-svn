@@ -47,7 +47,7 @@ static void url_requested_cb(GtkHTML *html, const char *url, GtkHTMLStream *stre
 	e = emote_get_by_url(url);
 	g_assert(e != NULL);
 	
-	gtk_html_write(html, stream, e->data, e->size);
+	gtk_html_write(html, stream, (gchar *)e->data, e->size);
 	gtk_html_flush(html);
 }
 

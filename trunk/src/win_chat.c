@@ -5,6 +5,7 @@
 #include <gtkhtml/gtkhtml.h>
 #include <gtkhtml/gtkhtml-stream.h>
 #include <gtkhtml/htmlselection.h>
+#include <time.h>
 #include <string.h>
 #include <stdio.h>
 #include "win_main.h"
@@ -13,6 +14,7 @@
 #include "interface.h"
 #include "misc.h"
 #include "emotes.h"
+#include "arch.h"
 #include "tlen.h"
 #include "prefs.h"
 #include <ctype.h>
@@ -62,7 +64,7 @@ static const gchar *append_fmt =
 static const gchar *my_bg = "#f0f0f0";
 static const gchar *their_bg = "#ffffff";
 
-void chat_init()
+void chat_init(void)
 {
 	warn_if_fail(win_main != NULL);
 	
@@ -280,39 +282,54 @@ void win_chat_update_title(const User *u)
 	gtk_window_set_icon(c->win, get_status_icon_pixbuf(c->user->status));
 }
 
-void win_chat_append(const gchar *id, const gchar *msg, gboolean me,
-	const gchar *time)
+void win_chat_append(const gchar *id, const gchar *msg, gboolean me, const gchar *str_time)
 {
 	Chat *c;
 	User *u;
-	gchar *m = markup_text(msg);
+	gchar *m = NULL;
 	gchar *name = NULL;
 	gchar *tim;
+	time_t prev_time;
 
 	c = win_chat_get(id, TRUE, TRUE);
 	g_assert(c != NULL);
 
-	if (time == NULL)
+	if (str_time == NULL) {
 		tim = (gchar *)get_time(NULL);
-	else
-		tim = (gchar *)time;
+	} else {
+		tim = (gchar *)str_time;
+	}
 	
-
 	/* XXX: dodawanie usera do listy jako brak autoryzacji */
 	u = user_get(id);
-	if (u == NULL)
+	if (u == NULL) {
 		name = (gchar *)id;
-	else
+	} else {
 		name = u->name;
-	
-	if (me)
-		gtk_html_stream_printf(c->stream, append_fmt, my_bg,
-				tim, pref_chat_my_name, pref_tlen_id, m);
-	else
-		gtk_html_stream_printf(c->stream, append_fmt, their_bg, 
-				tim, name, id, m);
+	}
 
-	g_free(m);
+	prev_time = u->last_chat;
+
+	/* Zapisz czas ostatniej wypowiedzi */
+	time(&u->last_chat);
+
+	/* Sprawdz czy tekst nie pojawil sie po dlugiej przerwie. Jesli tak, traktujemy
+	   to jako rozpoczecie nowej rozmowy */
+
+	if (prev_time == 0 || u->last_chat - prev_time >= 60 * 60) {	/* Godzina, XXX: #define */
+		arch_add(me ? ARCH_TYPE_CHAT_START_BY_ME : ARCH_TYPE_CHAT_START, u->last_chat, u, NULL);
+	}
+
+	/* Dodaj do archiwum */
+	arch_add(me ? ARCH_TYPE_CHAT_FROM_ME : ARCH_TYPE_CHAT_TO_ME, u->last_chat, u, msg);
+
+	m = markup_text(msg);
+
+	if (me) {
+		gtk_html_stream_printf(c->stream, append_fmt, my_bg, tim, pref_chat_my_name, pref_tlen_id, m);
+	} else {
+		gtk_html_stream_printf(c->stream, append_fmt, their_bg, tim, name, id, m);
+	}
 
 	/* scroll */
 	gtk_html_flush(c->output);
@@ -321,6 +338,8 @@ void win_chat_append(const gchar *id, const gchar *msg, gboolean me,
 	if (c->need_blinking == TRUE && c->blink_state == BlinkOff) {
 		g_timeout_add(750, window_icon_blink, c);
 	}
+
+	g_free(m);
 }
 
 static void clear_btn_clicked_cb(GtkButton *button, gpointer user_data)

@@ -6,6 +6,7 @@
 #include <gnome.h>
 
 #include "win_main.h"
+#include "arch.h"
 #include "tlen.h"
 #include "support.h"
 #include "emotes.h"
@@ -32,11 +33,16 @@ int main(int argc, char *argv[])
 	                    GNOME_PARAM_APP_DATADIR, PACKAGE_DATA_DIR,
 	                    NULL);
 
+	printf("GNOME_PARAM_APP_DATADIR=%s, PACKAGE_DATA_DIR=%s\n", GNOME_PARAM_APP_DATADIR, PACKAGE_DATA_DIR);
+
 	/* XXX: wizard konfiguracji gdy nie ma ustawien -- pierwsze
 	 * uruchomienie */
 	if(prefs_load() == FALSE)
 		printf("prefs_load() == FALSE\n");
 	
+	arch_init();
+	arch_load("sigsegv@tlen.pl");
+
 	win_main_create();
 	chat_init();
 	gtk_widget_show(win_main);
@@ -44,11 +50,10 @@ int main(int argc, char *argv[])
 	if(pref_chat_use_emotes == TRUE)
 		pref_chat_use_emotes = emote_load_set(pref_chat_emote_set);
 
-	//tester_create();
 
 	dock_create();
 
-	tlen_debug_set(TLEN_DEBUG_HIGH);
+//	tlen_debug_set(TLEN_DEBUG_HIGH);
 
 	desc = NULL;
 
