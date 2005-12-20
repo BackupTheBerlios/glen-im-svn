@@ -510,8 +510,7 @@ static gboolean visibility_changed_cb(GtkWidget *w, GdkEvent *ev,
 	GdkEventVisibility *v = (GdkEventVisibility *)ev;
 	Chat *c = (Chat *)data;
 
-	if (v->state == GDK_VISIBILITY_UNOBSCURED && 
-		c->blink_state == BlinkOff) {
+	if (v->state == GDK_VISIBILITY_UNOBSCURED && c->blink_state == BlinkOff) {
 		c->need_blinking = FALSE;
 	} else {
 		c->need_blinking = TRUE;

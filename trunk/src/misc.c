@@ -31,7 +31,8 @@ gchar *fromutf(const gchar *str)
 
 static const char *href[] = {
 	"http://",
-	"ftp://"
+	"https://",
+	"ftp://",
 };
 
 static const guint href_count = sizeof(href)/sizeof(href[0]);
