@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
 		printf("prefs_load() == FALSE\n");
 	
 	arch_init();
-//	arch_load("sigsegv@tlen.pl");
 
 	win_main_create();
 	chat_init();

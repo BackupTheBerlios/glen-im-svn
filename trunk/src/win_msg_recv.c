@@ -80,23 +80,18 @@ static GtkWidget * win_msg_recv_create()
 	gtk_widget_show_all(ret);
 	
 	w = lookup_widget(ret, "button_next");
-	g_signal_connect(G_OBJECT(w), "clicked", G_CALLBACK(next_button_cb),
-		NULL);
+	g_signal_connect(G_OBJECT(w), "clicked", G_CALLBACK(next_button_cb), NULL);
 	
 	w = lookup_widget(ret, "button_prev");
-	g_signal_connect(G_OBJECT(w), "clicked", G_CALLBACK(prev_button_cb),
-		NULL);
+	g_signal_connect(G_OBJECT(w), "clicked", G_CALLBACK(prev_button_cb), NULL);
 	
 	w = lookup_widget(ret, "button_reply");
-	g_signal_connect(G_OBJECT(w), "clicked", G_CALLBACK(reply_button_cb),
-		NULL);
+	g_signal_connect(G_OBJECT(w), "clicked", G_CALLBACK(reply_button_cb), NULL);
 
 	w = lookup_widget(ret, "button_close");
-	g_signal_connect(G_OBJECT(w), "clicked", G_CALLBACK(close_button_cb),
-		NULL);
+	g_signal_connect(G_OBJECT(w), "clicked", G_CALLBACK(close_button_cb), NULL);
 
-	g_signal_connect(G_OBJECT(ret), "delete_event",
-		G_CALLBACK(close_button_cb), NULL);
+	g_signal_connect(G_OBJECT(ret), "delete_event", G_CALLBACK(close_button_cb), NULL);
 
 	msg_count = msg_unread_count = 0;
 	cur_msg = NULL;
