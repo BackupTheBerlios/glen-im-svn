@@ -612,6 +612,10 @@ void quit_app_cb(void)
 	if (o2_is_connected())
 		o2_set_status(TLEN_PRESENCE_UNAVAILABLE, NULL);
 
+	/* Wy³±cz flushowanie archiwum ¿eby unikn±æ pisania do ju¿
+	   zamkniêtego pliku */
+	//arch_disable_flushing();
+
 	/* Dla ka¿dego usera zrzuæ archiwum na dysk */
 	user = user_get_list();
 	while (user != NULL) {
