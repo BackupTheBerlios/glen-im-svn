@@ -3,8 +3,9 @@
 #include "support.h"
 #include <gnome.h>
 #include <gtkhtml/gtkhtml.h>
+#include <gtkhtml/gtkhtml.h>
 #include <gtkhtml/gtkhtml-stream.h>
-#include <gtkhtml/htmlselection.h>
+//gtkhtml < 3.8: #include <gtkhtml/htmlselection.h>
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
@@ -439,6 +440,7 @@ static void input_copy_clipboard_cb(GtkTextView *textview, gpointer user_data)
 	Chat *c = (Chat *)user_data;
 	GtkTextBuffer *buf;
 	GtkTextIter start, end;
+	int len;
 
 	/* jesli jest zaznaczenie w input zostawiamy normalne zachowanie */
 	buf = gtk_text_view_get_buffer(textview);
@@ -451,7 +453,12 @@ static void input_copy_clipboard_cb(GtkTextView *textview, gpointer user_data)
 	   rowne "\n" nawet gdy nie jest NIC zaznaczone. W takim wypadku gdy user wciska
 	   ctrl+C traci swoj stary schowek na rzecz pustego. A to jest ZLE. */
 
-	if (html_engine_is_selection_active(c->output->engine)) {
+	// gtkhtml < 3.8: if (html_engine_is_selection_active(c->output->engine)) {
+	
+	len = 0;
+
+	gtk_html_get_selection_html(c->output, &len);
+	if (len != 0) {
 		/* w tym miejscu zakladamy, ze skoro nie ma zaznaczenia w input user
 		 * chce skopiowac to co jest w widgecie wyjsciowym */
 		gtk_html_copy(c->output);
