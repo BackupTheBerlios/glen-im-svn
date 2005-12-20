@@ -6,7 +6,7 @@ INCLUDES = \
 	@PACKAGE_CFLAGS@ \
 	-I/usr/local/include/libtlen2 -Wall
 	
-bin_PROGRAMS = glen
+bin_PROGRAMS = glen glen-dump-arch
 
 glen_SOURCES = \
 	arch.c arch.h \
@@ -33,8 +33,10 @@ glen_SOURCES = \
 	win_msg_send.c win_msg_send.h \
 	win_prefs.c win_prefs.h
 
-
 glen_LDADD = @PACKAGE_LIBS@ $(INTLLIBS) -ltlen2 -L/usr/local/lib/
+
+glen_dump_arch_SOURCES = glen-dump-arch.c
+glen_dump_arch_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 
 tags: $(glen_SOURCES)
 	ctags $(glen_SOURCES)
