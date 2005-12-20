@@ -3,7 +3,12 @@
 #ifndef ARCH_H
 #define ARCH_H
 
+#ifndef GLEN_DUMP_ARCH
 #include "user.h"
+#else
+#define GLEN_DUMP_ARCH_DEFINED
+#include <gtk/gtk.h>
+#endif
 
 /* Typ wpisu w archiwum */
 #define ARCH_TYPE_CHAT_TO_ME		0	/* Tekst do mnie */
@@ -23,6 +28,9 @@ struct structArchEntry {
 
 typedef struct structArchEntry ArchEntry;
 
+GSList *arch_load(const char *id);
+void arch_list_free(GSList *list);
+#ifndef GLEN_DUMP_ARCH
 /* Odpalenie podsystemu archiwum */
 int arch_init(void);
 /* Dodanie wpisu do archiwum */
@@ -30,8 +38,10 @@ int arch_add(char type, time_t now, User *user, const char *msg);
 /* Zamkniecie sesji zapisywania do archiwum dla usera */
 void arch_close(User *user);
 int arch_populate_userlist_model(GtkTreeStore *model);
-GSList *arch_load(const char *id);
-void arch_list_free(GSList *list);
+
+/* Wylacza flushowanie archiwum. Potrzebne przy wyjsciu z programu. */
+void arch_disable_flushing(void);
+#endif
 
 #endif
 

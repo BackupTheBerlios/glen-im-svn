@@ -13,6 +13,7 @@ static GSList *flush_list = NULL;
 /* tak czesto bedziemy zrzucac dane na dysk (ms) */
 static const guint flush_timeout = 8000;
 static char *archive_basedir = NULL;
+static guint flush_timer_id = 0;
 
 /* Funkcja flushujaca dane do plików z archiwum */
 static gboolean arch_flush_func(gpointer data);
@@ -49,7 +50,7 @@ int arch_init(void)
 		return -1;
 	}
 
-	g_timeout_add(flush_timeout, arch_flush_func, NULL);
+	flush_timer_id = g_timeout_add(flush_timeout, arch_flush_func, NULL);
 
 	return 0;
 }
@@ -99,6 +100,18 @@ int arch_add(char type, time_t now, User *user, const char *msg)
 	return 0;
 }
 
+/* Usuñ timer flushuj±cy dane z plików archiwum na dysk. Wcze¶niej
+   wywo³aj funkcjê obs³ugiwan± przez timer, aby wszystko co nale¿y
+   znalaz³o siê w plikach. */
+void arch_disable_flushing(void)
+{
+	arch_flush_func(NULL);
+
+	if (g_source_remove(flush_timer_id) == FALSE) {
+		g_warning("Nie udalo sie usunac timera flushujacego pliki archiwum. Spodziewaj sie crasha.");
+	}
+}
+
 void arch_close(User *user)
 {
 	if (user->arch_file != NULL) {
@@ -117,7 +130,6 @@ int arch_populate_userlist_model(GtkTreeStore *model)
 	GtkTreeIter iter;
 	GDir *dir = NULL;
 	char *id = NULL;
-	char *utf = NULL;
 	char buf[4096];
 
 	dir = g_dir_open(archive_basedir, 0, NULL);
@@ -143,14 +155,9 @@ int arch_populate_userlist_model(GtkTreeStore *model)
 				id = user->name;
 			}
 
-			utf = toutf(id);
-			g_assert(utf != NULL);
-			
-			g_debug("dodaje %s", utf);
+			g_debug("arch_populate_userlist_model: dodaje %s", id);
 			gtk_tree_store_append(model, &iter, NULL);
-			gtk_tree_store_set(model, &iter, 0, utf, -1);	/* 0, mamy tylko jedn± kolumnê */
-
-			g_free(utf);
+			gtk_tree_store_set(model, &iter, 0, id, -1);	/* 0, mamy tylko jedn± kolumnê */
 		} 
 	}
 
@@ -159,11 +166,37 @@ int arch_populate_userlist_model(GtkTreeStore *model)
 	return 0;
 }
 
+static char * dump_arch_entry_type(char type)
+{
+	static const char *types[] = { "CHAT_TO_ME", "CHAT_FROM_ME", "MSG_FROM_ME",
+		"MSG_TO_ME", "CHAT_START_BY_ME", "CHAT_START" };
+	size_t index;
+
+	index = type;
+
+	if (index >= sizeof(types) / sizeof(types[0])) {
+		return "UNKNOWN";
+	} else {
+		return (char *)types[index];
+	}
+}
+
+static void dump_arch_entry(ArchEntry *e)
+{
+	printf("ArchEntry\n");
+	printf("  type =    %s\n", dump_arch_entry_type(e->type));
+	printf("  time =    %s", ctime(&e->time));
+	printf("  textlen = %i\n", e->textlen);
+	if (e->text != NULL) {
+		printf("  text =    '%s'\n", e->text);
+	}
+}
+
 /* £aduje historiê dla podanego u¿ytkownika. Zwraca wska¼nik na listê list z
  * rozmowami/wiadomo¶ciami, lub NULL w przypadku b³êdu */
 GSList *arch_load(const char *id)
 {
-	char buf[4096];
+	char buf[8096];
 	FILE *fp;
 	GSList *list = NULL;
 	GSList *sub = NULL;
@@ -185,11 +218,10 @@ GSList *arch_load(const char *id)
 	}
 
 	while (!feof(fp)) {
-		printf(".\n");
 		/* Odczytaj podstawowe dane */
 		ret = fread(&entry, sizeof(entry.type) + sizeof(entry.time) + sizeof(entry.textlen), 1, fp);
 		if (ret != 1) {
-			puts("tutaj");
+			printf("fread failed #1, ret=%i\n", ret);
 			goto bail_out;
 		}
 
@@ -201,7 +233,7 @@ GSList *arch_load(const char *id)
 			} else {
 				ret = fread(entry.text, entry.textlen, 1, fp);
 				if (ret != 1) {
-					puts("tutaj");
+					printf("fread failed, ret=%i\n", ret);
 					free(entry.text);
 					goto bail_out;
 				}
@@ -212,30 +244,36 @@ GSList *arch_load(const char *id)
 			entry.text = NULL;
 		}
 
+		//dump_arch_entry(&entry);
+
+		/* Skopiuj wpis */
 		e = malloc(sizeof(ArchEntry));
 		if (e == NULL) {
 			goto bail_out;
 		} else {
 			memcpy(e, &entry, sizeof entry);
-			/* Wiadomo¶ci wrzucamy na oddzieln± podlistê */
 			if (entry.type == ARCH_TYPE_MSG_TO_ME || entry.type == ARCH_TYPE_MSG_FROM_ME) {
+			/* Wiadomo¶ci wrzucamy na oddzieln± podlistê */
 				messages = g_slist_append(messages, e);
-			} else {
+			} else if (entry.type == ARCH_TYPE_CHAT_START_BY_ME || entry.type == ARCH_TYPE_CHAT_START) {
+			/* Je¶li jest to pocz±tek rozmowy, robimy z niej oddzieln± podlistê */
+				if (sub != NULL) {
+					list = g_slist_append(list, sub);
+					sub = NULL;
+				}
+
 				sub = g_slist_append(sub, e);
-				printf("-> %s\n", e->text);
+			} else if (entry.type == ARCH_TYPE_CHAT_FROM_ME || entry.type == ARCH_TYPE_CHAT_TO_ME) {
+			/* Wypowiedzi w rozmowie wrzucamy na podlistê */
+				sub = g_slist_append(sub, e);
 			}
 		}
-
-		/* Je¶li to jest pocz±tek rozmowy, wstawiamy podlistê. */
-		if (sub != NULL && (entry.type == ARCH_TYPE_CHAT_START || entry.type == ARCH_TYPE_CHAT_START_BY_ME)) {
-			/* Wstaw poprzedni± podlistê */
-			list = g_slist_append(list, sub);
-			/* Nastêpny element wyl±duje ju¿ w nowej li¶cie */
-			sub = NULL;
-		}
-
 	}
 bail_out:
+	/* Wrzuæ ostatni± podlistê */
+	if (sub != NULL) {
+		list = g_slist_append(list, sub);
+	}
 
 	/* Dodaj podlistê z wiadomo¶ciami. Dodamy j± na pocz±tku, ¿eby mieæ do
 	 * niej ³atwy dostêp. */
@@ -243,16 +281,18 @@ bail_out:
 	fclose(fp);
 
 	{
+		puts("DUMP ARCHIWUM");
 		/* Omin wiadomosci */
 		GSList *ii = list->next;
 
 		while (ii != NULL) {
+			puts("---");
+
 			sub = ii->data;
 
-			printf("Rozmowa\n");
 			while (sub != NULL) {
 				e = sub->data;
-				printf("   %s\n", e->text);
+				dump_arch_entry(e);
 				sub = sub->next;
 			}
 
@@ -306,7 +346,7 @@ static gboolean arch_flush_func(gpointer data)
 		if (user->arch_file != NULL) {
 			fflush(user->arch_file);
 		} else {
-			g_error("arch_flush_func: user->arch_file == NULL");
+			g_warning("arch_flush_func: user->arch_file == NULL");
 		}
 	}
 
