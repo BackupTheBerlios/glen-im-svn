@@ -11,18 +11,22 @@ static GtkWidget *win_arch = NULL;
 static GtkTreeStore *users_model = NULL;
 static GtkTreeStore *list_model = NULL;
 
+static void close_button_cb(GtkWidget *, gpointer);
+
 /* Ustawia wyswietlana historie na danego usera */
 static void win_arch_set_user(const char *id);
 
 static void create_models(void);
 
-void win_arch_show(const char *id)
+void
+win_arch_show(const char *id)
 {
 	GtkWidget *scroll = NULL;
 	GtkWidget *html = NULL;
 	GtkWidget *tree = NULL;
 	GtkTreeViewColumn *column = NULL;
 	GtkCellRenderer *renderer = NULL;
+	GtkWidget *w = NULL;
 
 	if (win_arch != NULL) {
 		gtk_window_present(GTK_WINDOW(win_arch));
@@ -87,12 +91,28 @@ void win_arch_show(const char *id)
 		return;
 	}
 
+	/* Pod³±czamy sygna³y */
+	g_signal_connect(G_OBJECT(win_arch), "delete_event", G_CALLBACK(close_button_cb), NULL);
+
+	/* Przycisk "Zamknij" */
+	w = lookup_widget(win_arch, "button_close");
+	g_signal_connect(G_OBJECT(w), "clicked", G_CALLBACK(close_button_cb), NULL);
+
 	gtk_tree_view_set_model(GTK_TREE_VIEW(tree), GTK_TREE_MODEL(users_model));
 
 	gtk_widget_show_all(win_arch);
 }
 
-static void win_arch_set_user(const char *id)
+static void
+win_arch_set_user(const char *id)
 {
+}
+
+static void
+close_button_cb(GtkWidget *widget, gpointer data)
+{
+	gtk_widget_hide(win_arch);
+	gtk_widget_destroy(win_arch);
+	win_arch = NULL;
 }
 
