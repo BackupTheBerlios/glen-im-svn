@@ -44,11 +44,16 @@ static void url_requested_cb(GtkHTML *html, const char *url, GtkHTMLStream *stre
 {
 	Emote *e;
 
+	g_debug("url_requested_cb: url=%s", url);
+
 	e = emote_get_by_url(url);
 	g_assert(e != NULL);
 	
 	gtk_html_write(html, stream, (gchar *)e->data, e->size);
-	gtk_html_flush(html);
+	//gtk_html_flush(html);
+	
+	/* Zamykamy ten stream -- jest tworzony tylko dla obrazka */
+	gtk_html_stream_close(stream, GTK_HTML_STREAM_OK);
 }
 
 static void link_clicked_cb(GtkHTML *html, const gchar *url, gpointer data)
