@@ -2123,7 +2123,7 @@ create_win_arch (void)
   gtk_widget_set_name (tree_users, "tree_users");
   gtk_widget_show (tree_users);
   gtk_container_add (GTK_CONTAINER (scrolledwindow4), tree_users);
-  gtk_widget_set_size_request (tree_users, 150, -1);
+  gtk_widget_set_size_request (tree_users, 250, -1);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree_users), FALSE);
   gtk_tree_view_set_reorderable (GTK_TREE_VIEW (tree_users), TRUE);
   gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW (tree_users), TRUE);
@@ -2144,7 +2144,7 @@ create_win_arch (void)
   gtk_widget_set_name (tree_list, "tree_list");
   gtk_widget_show (tree_list);
   gtk_container_add (GTK_CONTAINER (scrolledwindow5), tree_list);
-  gtk_widget_set_size_request (tree_list, -1, 150);
+  gtk_widget_set_size_request (tree_list, -1, 95);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree_list), FALSE);
   gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW (tree_list), TRUE);
 
